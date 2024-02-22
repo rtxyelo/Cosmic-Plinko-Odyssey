@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PegsArrangementBehaviour : MonoBehaviour
@@ -8,19 +9,20 @@ public class PegsArrangementBehaviour : MonoBehaviour
     private int currentLevelValue;
 
     [SerializeField] private RectTransform commonPegPosition;
-    //private Transform jumpPegPosition;
+    [SerializeField] private RectTransform jumpPegPosition;
     //private Transform speedPegPosition;
 
     private int commonPegsCount;
+    private int jumpPegsCount;
 
-    [SerializeField] private GameObject pegPrefab;
+    [SerializeField] private GameObject commonPegPrefab;
+    [SerializeField] private GameObject jumpPegPrefab;
 
-    private bool pegIsPlaced = false;
+    private bool commonPegIsPlaced = true;
+    private bool jumpPegIsPlaced = true;
 
     private void Start()
     {
-        Debug.Log("commonPegPosition " + commonPegPosition.anchoredPosition);
-
         if (!PlayerPrefs.HasKey(currentLevelKey))
         {
             PlayerPrefs.SetInt(currentLevelKey, 1);
@@ -28,26 +30,34 @@ public class PegsArrangementBehaviour : MonoBehaviour
         currentLevelValue = PlayerPrefs.GetInt(currentLevelKey, 1);
         CalculatePegsCountByLvl(currentLevelValue);
 
-        // Instantiate pegs by positions
-        PlaceCommonPeg();
-
     }
 
     private void Update()
     {
-        while (commonPegsCount > 0 && pegIsPlaced)
-        {
-            pegIsPlaced = false;
-            PlaceCommonPeg();
-        }
+        PlaceCommonPeg();
+        PlaceJumpPeg();
     }
 
     private void PlaceCommonPeg()
     {
-        //GameObject pegGo = Instantiate(pegPrefab, commonPegPosition.anchoredPosition, Quaternion.identity);
-        GameObject pegGo = Instantiate(pegPrefab, commonPegPosition);
-        Debug.Log("Peg is placed ");
-        commonPegsCount--;
+        if (commonPegsCount > 0 && commonPegIsPlaced)
+        {
+            commonPegIsPlaced = false;
+            var go = Instantiate(commonPegPrefab, commonPegPosition);
+            go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, 0);
+            commonPegsCount--;
+        }
+    }
+
+    private void PlaceJumpPeg()
+    {
+        if (jumpPegsCount > 0 && jumpPegIsPlaced)
+        {
+            jumpPegIsPlaced = false;
+            var go = Instantiate(jumpPegPrefab, jumpPegPosition);
+            go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, 0);
+            jumpPegsCount--;
+        }
     }
 
     private void CalculatePegsCountByLvl(int currentLvl)
@@ -58,6 +68,8 @@ public class PegsArrangementBehaviour : MonoBehaviour
                 {
                     commonPegsCount = 3;
                     Debug.Log("Common Pegs Count " + commonPegsCount);
+                    jumpPegsCount = 1;
+                    Debug.Log("Jump Pegs Count " + commonPegsCount);
                     break;
                 }
             case 2:
@@ -108,8 +120,14 @@ public class PegsArrangementBehaviour : MonoBehaviour
         }
     }
 
-    public void PegIsPlaced()
+    public void PegIsPlaced(int pegType)
     {
-        pegIsPlaced = true;
+        switch (pegType)
+        {
+            case 1:
+                commonPegIsPlaced = true; break;
+            case 2:
+                jumpPegIsPlaced = true; break;
+        }
     }
 }
