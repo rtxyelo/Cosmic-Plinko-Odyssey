@@ -8,6 +8,7 @@ public class ChooseLevelBehaviour : MonoBehaviour
     [SerializeField] private AudioSource declineSound;
 
     private string maxLevelKey = "MaxLevel";
+    private string currentLevelKey = "CurrentLevel";
     private string musicVolumeKey = "MusicVolumeKey";
 
     /// <summary>
@@ -21,12 +22,18 @@ public class ChooseLevelBehaviour : MonoBehaviour
             PlayerPrefs.SetFloat(musicVolumeKey, 0.2f);
         }
 
+        if (!PlayerPrefs.HasKey(currentLevelKey))
+        {
+            PlayerPrefs.SetInt(currentLevelKey, 1);
+        }
+
         if (!PlayerPrefs.HasKey(maxLevelKey))
         {
             PlayerPrefs.SetInt(maxLevelKey, 1);
         }
         else if (lvl <= PlayerPrefs.GetInt(maxLevelKey, 1000))
         {
+            PlayerPrefs.SetInt(currentLevelKey, lvl);
             if (PlayerPrefs.GetFloat(musicVolumeKey, 0.2f) != 0f)
             {
                 asseptSound.volume = PlayerPrefs.GetFloat(musicVolumeKey, 0.2f) + 0.2f;

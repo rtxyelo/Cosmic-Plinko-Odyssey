@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PegBehaviour : MonoBehaviour
 {
@@ -8,21 +8,37 @@ public class PegBehaviour : MonoBehaviour
     private bool isCanPlace = true;
 
     private Vector3 prevPoint = Vector3.zero;
-
+	private Image pegImage;
 	private Rigidbody2D rigidBody;
+	private CircleCollider2D circleCollider;
+	private GameObject bottomOuterZone;
+	private PegsArrangementBehaviour pegsArrangementBehaviour;
 
-    // Start is called before the first frame update
+
     void Start()
     {
 		prevPoint = transform.position;
 		rigidBody = GetComponent<Rigidbody2D>();
-	}
+        circleCollider = GetComponent<CircleCollider2D>();
+        pegImage = GetComponent<Image>();
+        circleCollider.isTrigger = true;
+
+        pegsArrangementBehaviour = GameObject.Find("PegsArrangementBehaviour").GetComponent<PegsArrangementBehaviour>();
+        bottomOuterZone = GameObject.Find("Bottom");
+    }
 
     // Update is called once per frame
     void Update()
     {
         PegMoveController();
         //PegPlaceController();
+
+        if (isMouseDrug && isCanPlace)
+        {
+            bottomOuterZone.SetActive(true);
+        }
+        else
+            bottomOuterZone.SetActive(false);
 	}
 
 	private void PegMoveController()
@@ -64,13 +80,16 @@ public class PegBehaviour : MonoBehaviour
 	private void OnMouseDown()
 	{
         isMouseDrug = true;
-	}
+        pegImage.enabled = true;
+    }
 
     private void OnMouseUp()
     {
         isMouseDrug = false;
     }
 
+
+	// Rewrite for each type of peg !!!
 	private void OnTriggerStay2D(Collider2D collision)
 	{
 		if(collision != null)
@@ -78,19 +97,37 @@ public class PegBehaviour : MonoBehaviour
             if (collision.CompareTag("OuterZone"))
             {
                 isCanPlace = false;
-			}
+            }
         }
 	}
 
-	private void OnTriggerExit2D(Collider2D collision)
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision != null)
+    //    {
+    //        if (collision.CompareTag("OuterZone"))
+    //        {
+    //            if(bottomOuterZone)
+    //            {
+    //                bottomOuterZone.SetActive(false);
+    //                Debug.Log("Deactivate bottom");
+    //            }
+    //        }
+    //    }
+    //}
+
+    private void OnTriggerExit2D(Collider2D collision)
 	{
 		if (collision != null)
 		{
 			if (collision.CompareTag("OuterZone"))
 			{
 				isCanPlace = true;
-			}
-		}
+                pegsArrangementBehaviour.PegIsPlaced();
+                bottomOuterZone.SetActive(true);
+				Debug.Log("Trigger exit");
+            }
+        }
 	}
 
 	private void OnCollisionExit2D(Collision2D collision)
