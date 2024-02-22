@@ -11,6 +11,7 @@ public class PegBehaviour : MonoBehaviour
 	private Image pegImage;
 	private Rigidbody2D rigidBody;
 	private BoxCollider2D bottomOuterZone;
+	private CircleCollider2D outerBall;
 	private PegsArrangementBehaviour pegsArrangementBehaviour;
 
 
@@ -21,8 +22,9 @@ public class PegBehaviour : MonoBehaviour
         pegImage = GetComponent<Image>();
 
         pegsArrangementBehaviour = GameObject.Find("PegsArrangementBehaviour").GetComponent<PegsArrangementBehaviour>();
-        bottomOuterZone = GameObject.Find("Bottom").GetComponent<BoxCollider2D>();
-    }
+        bottomOuterZone = GameObject.Find("BottomWall").GetComponent<BoxCollider2D>();
+		outerBall = transform.GetChild(0).GetComponent<CircleCollider2D>();
+	}
 
     // Update is called once per frame
     void Update()
@@ -38,10 +40,12 @@ public class PegBehaviour : MonoBehaviour
 		if (isMouseDrug && !isCanPlace)
 		{
 			Physics2D.IgnoreCollision(bottomOuterZone, this.gameObject.GetComponent<CircleCollider2D>());
+			Physics2D.IgnoreCollision(bottomOuterZone, outerBall);
 		}
 		else
 		{
 			Physics2D.IgnoreCollision(bottomOuterZone, this.gameObject.GetComponent<CircleCollider2D>(), false);
+			Physics2D.IgnoreCollision(bottomOuterZone, outerBall, false);
 		}
 	}
 
