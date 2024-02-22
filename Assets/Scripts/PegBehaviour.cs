@@ -10,8 +10,7 @@ public class PegBehaviour : MonoBehaviour
     private Vector3 prevPoint = Vector3.zero;
 	private Image pegImage;
 	private Rigidbody2D rigidBody;
-	private CircleCollider2D circleCollider;
-	private GameObject bottomOuterZone;
+	private BoxCollider2D bottomOuterZone;
 	private PegsArrangementBehaviour pegsArrangementBehaviour;
 
 
@@ -19,26 +18,28 @@ public class PegBehaviour : MonoBehaviour
     {
 		prevPoint = transform.position;
 		rigidBody = GetComponent<Rigidbody2D>();
-        circleCollider = GetComponent<CircleCollider2D>();
         pegImage = GetComponent<Image>();
-        circleCollider.isTrigger = true;
 
         pegsArrangementBehaviour = GameObject.Find("PegsArrangementBehaviour").GetComponent<PegsArrangementBehaviour>();
-        bottomOuterZone = GameObject.Find("Bottom");
+        bottomOuterZone = GameObject.Find("Bottom").GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
         PegMoveController();
-        //PegPlaceController();
+		//PegPlaceController();
 
-        if (isMouseDrug && isCanPlace)
-        {
-            bottomOuterZone.SetActive(true);
-        }
-        else
-            bottomOuterZone.SetActive(false);
+		Debug.Log(isCanPlace);
+
+		if(isMouseDrug && !isCanPlace)
+		{
+			bottomOuterZone.enabled = false;
+		}
+		else
+		{
+			bottomOuterZone.enabled = true;
+		}
 	}
 
 	private void PegMoveController()
@@ -101,21 +102,6 @@ public class PegBehaviour : MonoBehaviour
         }
 	}
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision != null)
-    //    {
-    //        if (collision.CompareTag("OuterZone"))
-    //        {
-    //            if(bottomOuterZone)
-    //            {
-    //                bottomOuterZone.SetActive(false);
-    //                Debug.Log("Deactivate bottom");
-    //            }
-    //        }
-    //    }
-    //}
-
     private void OnTriggerExit2D(Collider2D collision)
 	{
 		if (collision != null)
@@ -123,10 +109,10 @@ public class PegBehaviour : MonoBehaviour
 			if (collision.CompareTag("OuterZone"))
 			{
 				isCanPlace = true;
-                pegsArrangementBehaviour.PegIsPlaced();
-                bottomOuterZone.SetActive(true);
-				Debug.Log("Trigger exit");
-            }
+				pegsArrangementBehaviour.PegIsPlaced();
+				//bottomOuterZone.enabled = true;
+				Debug.Log("Exit trigger");
+			}
         }
 	}
 

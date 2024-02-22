@@ -110,6 +110,6 @@ public class PegsArrangementBehaviour : MonoBehaviour
 
     public void PegIsPlaced()
     {
-        //pegIsPlaced = true;
+        pegIsPlaced = true;
     }
 }

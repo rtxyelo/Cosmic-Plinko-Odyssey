@@ -280,7 +280,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0024414062, y: 0.010009766}
+  m_AnchoredPosition: {x: -0.0024414062, y: 0.009765625}
   m_SizeDelta: {x: 0.0050659, y: 0.02002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &234946552
@@ -591,7 +591,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -365.63, y: 95.890015}
+  m_AnchoredPosition: {x: -365.62988, y: 95.89014}
   m_SizeDelta: {x: 731.26, y: 191.78}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &323454110
@@ -2109,7 +2109,7 @@ GameObject:
   - component: {fileID: 2123338233}
   - component: {fileID: 2123338232}
   - component: {fileID: 2123338231}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
