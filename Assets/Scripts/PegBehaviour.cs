@@ -29,16 +29,19 @@ public class PegBehaviour : MonoBehaviour
     {
         PegMoveController();
 		//PegPlaceController();
+		CheckCollision();
 
-		Debug.Log(isCanPlace);
+	}
 
-		if(isMouseDrug && !isCanPlace)
+	private void CheckCollision()
+	{
+		if (isMouseDrug && !isCanPlace)
 		{
-			bottomOuterZone.enabled = false;
+			Physics2D.IgnoreCollision(bottomOuterZone, this.gameObject.GetComponent<CircleCollider2D>());
 		}
 		else
 		{
-			bottomOuterZone.enabled = true;
+			Physics2D.IgnoreCollision(bottomOuterZone, this.gameObject.GetComponent<CircleCollider2D>(), false);
 		}
 	}
 
@@ -110,20 +113,7 @@ public class PegBehaviour : MonoBehaviour
 			{
 				isCanPlace = true;
 				pegsArrangementBehaviour.PegIsPlaced();
-				//bottomOuterZone.enabled = true;
-				Debug.Log("Exit trigger");
 			}
         }
-	}
-
-	private void OnCollisionExit2D(Collision2D collision)
-	{
-		if (collision != null)
-		{
-			if (collision.collider.CompareTag("OuterZone"))
-			{
-				isCanPlace = true;
-			}
-		}
 	}
 }
