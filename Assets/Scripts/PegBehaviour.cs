@@ -18,7 +18,6 @@ public class PegBehaviour : MonoBehaviour
     {
 		prevPoint = transform.position;
 		rigidBody = GetComponent<Rigidbody2D>();
-		Debug.Log("rigidBody name " + rigidBody.gameObject.name);
         pegImage = GetComponent<Image>();
 
         bottomOuterZone = GameObject.Find("BottomWall").GetComponent<BoxCollider2D>();
@@ -59,9 +58,7 @@ public class PegBehaviour : MonoBehaviour
 		if (isMouseDrug)
 		{
 			rigidBody.velocity = (cursor - transform.position).normalized * Vector3.Distance(cursor, transform.position) * 20f;
-
 			//transform.position = cursor;
-
 			rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
 		}
 		else
@@ -76,7 +73,6 @@ public class PegBehaviour : MonoBehaviour
 	{
         isMouseDrug = true;
         pegImage.enabled = true;
-		Debug.Log("Peg is clamp " + gameObject.name);
     }
 
     private void OnMouseUp()

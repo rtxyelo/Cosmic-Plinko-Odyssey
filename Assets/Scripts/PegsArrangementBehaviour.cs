@@ -67,9 +67,7 @@ public class PegsArrangementBehaviour : MonoBehaviour
             case 1:
                 {
                     commonPegsCount = 3;
-                    Debug.Log("Common Pegs Count " + commonPegsCount);
                     jumpPegsCount = 1;
-                    Debug.Log("Jump Pegs Count " + commonPegsCount);
                     break;
                 }
             case 2:
