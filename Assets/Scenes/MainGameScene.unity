@@ -3249,6 +3249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1584524498}
   - component: {fileID: 1584524499}
+  - component: {fileID: 1584524500}
   m_Layer: 0
   m_Name: BottomPanel
   m_TagString: Untagged
@@ -3287,6 +3288,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pegPanel: {fileID: 1208100467}
   scorePanel: {fileID: 538508155}
+--- !u!95 &1584524500
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584524497}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d701a42f60219a945bd3c9caddff3f66, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1736619410
 GameObject:
   m_ObjectHideFlags: 0
