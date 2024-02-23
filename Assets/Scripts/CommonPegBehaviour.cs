@@ -8,8 +8,8 @@ public class CommonPegBehaviour : PegBehaviour
 
     protected override void Start()
     {
-        pegsArrangementBehaviour = GameObject.Find("PegsArrangementBehaviour").GetComponent<PegsArrangementBehaviour>();
 		base.Start();
+		pegsArrangementBehaviour = GameObject.Find("PegsArrangementBehaviour").GetComponent<PegsArrangementBehaviour>();
     }
 
 	protected override void Update()

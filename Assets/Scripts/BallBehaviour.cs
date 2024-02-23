@@ -48,7 +48,7 @@ public class BallBehaviour : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Exit"))
             {
-                Destroy(this.gameObject);
+				FinishGame();
             }
 
 			if (collision.gameObject.CompareTag("Peg"))
@@ -56,5 +56,15 @@ public class BallBehaviour : MonoBehaviour
 				touchCount++;
 			}
         }
+	}
+
+	public void FinishGame()
+	{
+		Destroy(this.gameObject);
+	}
+
+	public void StartGame()
+	{
+		isStart = true;
 	}
 }

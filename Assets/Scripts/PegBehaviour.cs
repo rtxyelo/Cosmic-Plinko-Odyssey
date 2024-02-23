@@ -7,22 +7,24 @@ public class PegBehaviour : MonoBehaviour
     private bool isMouseDrug = false;
     private bool isCanPlace = true;
 
-    private Vector3 prevPoint = Vector3.zero;
 	private Image pegImage;
-	protected Rigidbody2D rigidBody;
 	private BoxCollider2D bottomOuterZone;
 	private CircleCollider2D outerBall;
 
+	protected GameObject ball;
+	protected BallBehaviour ballScript;
+	protected Rigidbody2D rigidBody;
 
-    protected virtual void Start()
+	protected virtual void Start()
     {
-		prevPoint = transform.position;
 		rigidBody = GetComponent<Rigidbody2D>();
         pegImage = GetComponent<Image>();
 
-        bottomOuterZone = GameObject.Find("BottomWall").GetComponent<BoxCollider2D>();
-		outerBall = transform.GetChild(0).GetComponent<CircleCollider2D>();
+		ball = GameObject.FindGameObjectWithTag("Ball");
+		ballScript = ball.GetComponent<BallBehaviour>();
 
+		bottomOuterZone = GameObject.Find("BottomWall").GetComponent<BoxCollider2D>();
+		outerBall = transform.GetChild(0).GetComponent<CircleCollider2D>();
 	}
 
     // Update is called once per frame
@@ -49,6 +51,9 @@ public class PegBehaviour : MonoBehaviour
 
 	private void PegMoveController()
 	{
+		if(ballScript.isStart)
+			return;
+
         Vector3 cursor = Input.mousePosition;
 
         cursor = Camera.main.ScreenToWorldPoint(cursor);
@@ -71,9 +76,14 @@ public class PegBehaviour : MonoBehaviour
 
 	private void OnMouseDown()
 	{
+
         isMouseDrug = true;
-        pegImage.enabled = true;
-    }
+
+		if (!ballScript.isStart)
+		{
+			pegImage.enabled = true;
+		}
+	}
 
     private void OnMouseUp()
     {
