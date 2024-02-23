@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class SoundBehaviour : MonoBehaviour
 {
     [SerializeField] private AudioSource _music;
+    [SerializeField] private AudioSource _btnSound;
     [SerializeField] private Slider _volumeSlider;
 
     private string _musicVolumeKey = "MusicVolumeKey";
@@ -42,5 +43,11 @@ public class SoundBehaviour : MonoBehaviour
         {
             _volumeSlider.value = PlayerPrefs.GetFloat(_musicVolumeKey);
         }
+    }
+
+    public void PlayButtonSound()
+    {
+        _btnSound.volume = PlayerPrefs.GetFloat(_musicVolumeKey);
+        _btnSound.Play();
     }
 }
