@@ -11,10 +11,16 @@ public class BallBehaviour : MonoBehaviour
 
     private Rigidbody2D rigidBody;
     private PhysicsMaterial2D ballMaterial;
+	private GameBehaviour gameBehaviour;
+
+	private Vector2 ballSpeed = Vector2.zero;
+	private float ballGravity = 0;
+	private bool isGameBeenPaused = false;
 
     // Start is called before the first frame update
     void Start()
     {
+		gameBehaviour = FindObjectOfType<GameBehaviour>();
 		rigidBody = GetComponent<Rigidbody2D>();
 		ballMaterial = rigidBody.sharedMaterial;
 
@@ -36,9 +42,28 @@ public class BallBehaviour : MonoBehaviour
 			isStart = true;
 		}
 
-		if (isStart)
+		if (isStart && rigidBody.isKinematic)
 		{
 			rigidBody.isKinematic = false;
+		}
+
+		if (gameBehaviour.isGamePaused)
+		{
+			rigidBody.velocity = Vector2.zero;
+			rigidBody.gravityScale = 0;
+			isGameBeenPaused = true;
+		}
+		else
+		{
+			if (isGameBeenPaused)
+			{
+				rigidBody.velocity = ballSpeed;
+				rigidBody.gravityScale = ballGravity;
+				isGameBeenPaused = false;
+			}
+
+			ballSpeed = rigidBody.velocity;
+			ballGravity = rigidBody.gravityScale;
 		}
 	}
 

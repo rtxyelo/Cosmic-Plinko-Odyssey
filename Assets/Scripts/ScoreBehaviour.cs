@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class ScoreBehaviour : MonoBehaviour
 {
+    public int playerScore;
+    public int scoreScaler = 10;
+
     private GameObject ball;
     private BallBehaviour ballScript;
 
@@ -16,20 +19,27 @@ public class ScoreBehaviour : MonoBehaviour
     {
 		ball = GameObject.FindGameObjectWithTag("Ball");
 		ballScript = ball.GetComponent<BallBehaviour>();
+
+		playerScore = 0;
 	}
 
-    // Update is called once per frame
-    void Update()
+	// Update is called once per frame
+	void Update()
     {
         SetScore();
-
+        ScoreUpdate();
 	}
 
     private void SetScore()
     {
         if (ballScript.isStart)
         {
-            _textMeshPro.text = (ballScript.touchCount * 10).ToString();
+            _textMeshPro.text = playerScore.ToString();
         }
     }
+
+    private void ScoreUpdate()
+    {
+        playerScore = ballScript.touchCount * scoreScaler;
+	}
 }

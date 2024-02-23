@@ -10,13 +10,17 @@ public class BottomPanelBehaviour : MonoBehaviour
 	private GameObject ball;
 	private BallBehaviour ballScript;
 
+	private GameBehaviour gameBehaviour;
+
 	// Start is called before the first frame update
 	void Start()
     {
 		ball = GameObject.FindGameObjectWithTag("Ball");
 		ballScript = ball.GetComponent<BallBehaviour>();
 		pegPanel.SetActive(true);
-		scorePanel.SetActive(false);
+		scorePanel.SetActive(true);
+
+		gameBehaviour = FindObjectOfType<GameBehaviour>();
 	}
 
     // Update is called once per frame
@@ -29,5 +33,15 @@ public class BottomPanelBehaviour : MonoBehaviour
     {
 		pegPanel.SetActive(false);
 		scorePanel.SetActive(true);
+	}
+
+	public void RemoveUnusedPegs()
+	{
+		gameBehaviour.GameStart();
+	}
+
+	public void StartGame()
+	{
+		ballScript.StartGame();
 	}
 }

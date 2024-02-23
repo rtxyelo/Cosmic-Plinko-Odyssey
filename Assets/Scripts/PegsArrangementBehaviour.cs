@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -17,6 +19,12 @@ public class PegsArrangementBehaviour : MonoBehaviour
 
     [SerializeField] private GameObject commonPegPrefab;
     [SerializeField] private GameObject jumpPegPrefab;
+
+    private List<PegBehaviour> commonPegsInstances = new List<PegBehaviour>();
+    private List<PegBehaviour> jumpPegsInstances = new List<PegBehaviour>();
+
+    [SerializeField] private TMP_Text commonPegCountDisplay;
+    [SerializeField] private TMP_Text jumpPegCountDisplay;
 
     private bool commonPegIsPlaced = true;
     private bool jumpPegIsPlaced = true;
@@ -36,16 +44,18 @@ public class PegsArrangementBehaviour : MonoBehaviour
     {
         PlaceCommonPeg();
         PlaceJumpPeg();
-    }
+        DisplayPegsCount();
+	}
 
     private void PlaceCommonPeg()
     {
         if (commonPegsCount > 0 && commonPegIsPlaced)
         {
-            commonPegIsPlaced = false;
+			commonPegIsPlaced = false;
             var go = Instantiate(commonPegPrefab, commonPegPosition);
             go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, 0);
-            commonPegsCount--;
+			commonPegsInstances.Add(go.GetComponent<PegBehaviour>());
+			commonPegsCount--;
         }
     }
 
@@ -53,14 +63,34 @@ public class PegsArrangementBehaviour : MonoBehaviour
     {
         if (jumpPegsCount > 0 && jumpPegIsPlaced)
         {
-            jumpPegIsPlaced = false;
+			jumpPegIsPlaced = false;
             var go = Instantiate(jumpPegPrefab, jumpPegPosition);
             go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, 0);
+            jumpPegsInstances.Add(go.GetComponent<PegBehaviour>());
             jumpPegsCount--;
         }
     }
 
-    private void CalculatePegsCountByLvl(int currentLvl)
+    private void DisplayPegsCount()
+    {
+		commonPegCountDisplay.text = (commonPegsCount + CheckUnusedPegCount(commonPegsInstances)).ToString();
+		jumpPegCountDisplay.text = (jumpPegsCount + CheckUnusedPegCount(jumpPegsInstances)).ToString();
+	}
+
+    private int CheckUnusedPegCount(List<PegBehaviour> pegs)
+    {
+        int count = 0;
+        foreach (var peg in pegs)
+        {
+            if (!peg.isCanPlace)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+	private void CalculatePegsCountByLvl(int currentLvl)
     {
         switch (currentLvl)
         {

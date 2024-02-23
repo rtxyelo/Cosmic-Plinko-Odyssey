@@ -4,12 +4,13 @@ using UnityEngine.UI;
 
 public class PegBehaviour : MonoBehaviour
 {
-    private bool isMouseDrug = false;
-    private bool isCanPlace = true;
+    [HideInInspector] public bool isMouseDrug = false;
+    [HideInInspector] public bool isCanPlace = false;
 
 	private Image pegImage;
 	private BoxCollider2D bottomOuterZone;
 	private CircleCollider2D outerBall;
+	private GameBehaviour gameBehaviour;
 
 	protected GameObject ball;
 	protected BallBehaviour ballScript;
@@ -25,6 +26,8 @@ public class PegBehaviour : MonoBehaviour
 
 		bottomOuterZone = GameObject.Find("BottomWall").GetComponent<BoxCollider2D>();
 		outerBall = transform.GetChild(0).GetComponent<CircleCollider2D>();
+
+		gameBehaviour = FindObjectOfType<GameBehaviour>();
 	}
 
     // Update is called once per frame
@@ -32,7 +35,7 @@ public class PegBehaviour : MonoBehaviour
     {
         PegMoveController();
 		CheckCollision();
-
+		HideUnusedPegs();
 	}
 
 	private void CheckCollision()
@@ -52,6 +55,8 @@ public class PegBehaviour : MonoBehaviour
 	private void PegMoveController()
 	{
 		if(ballScript.isStart)
+			return;
+		if(gameBehaviour.isGamePaused) 
 			return;
 
         Vector3 cursor = Input.mousePosition;
@@ -74,12 +79,20 @@ public class PegBehaviour : MonoBehaviour
 
 	}
 
+	private void HideUnusedPegs()
+	{
+		if (gameBehaviour.isGameStart && !isCanPlace)
+		{
+			Destroy(gameObject);
+		}
+	}
+
 	private void OnMouseDown()
 	{
 
         isMouseDrug = true;
 
-		if (!ballScript.isStart)
+		if (!ballScript.isStart && !gameBehaviour.isGamePaused)
 		{
 			pegImage.enabled = true;
 		}
