@@ -37,7 +37,6 @@ public class PegsArrangementBehaviour : MonoBehaviour
     [SerializeField] List<GameObject> healthBonusesList = new List<GameObject>();
 
     [HideInInspector] public static List<GameObject> listOfCollectBonuses = new List<GameObject>();
-    [SerializeField] private BallBehaviour ballScript;
 
     private void Start()
     {
@@ -212,8 +211,8 @@ public class PegsArrangementBehaviour : MonoBehaviour
             bonus.SetActive(true);
         }
 
-        ballScript.PlaceBallOnInitialPosition();
-        ballScript.touchCount = 0;
+		ballBehaviour.PlaceBallOnInitialPosition();
+		ballBehaviour.touchCount = 0;
 
         ScoreBehaviour.playerScore = 0;
         ScoreBehaviour.pointsBonusesCollectCount = 0;

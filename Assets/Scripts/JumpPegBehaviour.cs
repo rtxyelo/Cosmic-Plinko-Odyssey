@@ -48,8 +48,8 @@ public class JumpPegBehaviour : PegBehaviour
         {
             if (collision.CompareTag("OuterZone"))
             {
-                pegsArrangementBehaviour.PegIsPlaced(2);
-            }
+				pegsArrangementBehaviour.PegIsPlaced(2);
+			}
         }
     }
 }

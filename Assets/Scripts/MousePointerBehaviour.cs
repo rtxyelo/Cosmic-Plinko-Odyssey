@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MousePointerBehaviour : MonoBehaviour
 {
-    [HideInInspector]
+    //[HideInInspector]
     public bool isMouseInStartZone = false;
 
     private Collider2D collision;
@@ -41,7 +41,7 @@ public class MousePointerBehaviour : MonoBehaviour
 
 		cursor = Camera.main.ScreenToWorldPoint(cursor);
 
-		cursor.z = 0;
+		cursor.z = 1;
 
         return cursor;
 	}

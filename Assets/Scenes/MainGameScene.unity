@@ -4959,7 +4959,7 @@ GameObject:
   - component: {fileID: 775303504}
   - component: {fileID: 775303503}
   - component: {fileID: 775303502}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BottomTrigger
   m_TagString: OuterZone
   m_Icon: {fileID: 0}
