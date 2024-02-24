@@ -15,6 +15,7 @@ public class BallBehaviour : MonoBehaviour
     private PhysicsMaterial2D ballMaterial;
 	private GameBehaviour gameBehaviour;
     private ScoreBehaviour scoreBehaviour;
+    private PegsArrangementBehaviour pegsArrangementBehaviour;
 
     private Vector2 ballSpeed = Vector2.zero;
 	private float ballGravity = 0;
@@ -25,8 +26,9 @@ public class BallBehaviour : MonoBehaviour
     void Start()
     {
 		initialPosition = transform.position;
+        pegsArrangementBehaviour = GameObject.Find("PegsArrangementBehaviour").GetComponent<PegsArrangementBehaviour>();
 
-		gameBehaviour = FindObjectOfType<GameBehaviour>();
+        gameBehaviour = FindObjectOfType<GameBehaviour>();
 		scoreBehaviour = FindObjectOfType<ScoreBehaviour>();
 
         rigidBody = GetComponent<Rigidbody2D>();
@@ -81,8 +83,8 @@ public class BallBehaviour : MonoBehaviour
         {
 			if (collision.gameObject.CompareTag("Exit") && isHealthBonusCollect)
 			{
-				transform.position = initialPosition;
-				isHealthBonusCollect = false;
+				PlaceBallOnInitialPosition();
+                isHealthBonusCollect = false;
             }
             else if (collision.gameObject.CompareTag("Exit"))
             {
@@ -97,26 +99,42 @@ public class BallBehaviour : MonoBehaviour
 			if (collision.gameObject.CompareTag("PointsBonus"))
 			{
 				scoreBehaviour.PointsBonusCollect();
-				Destroy(collision.gameObject);
+
+                pegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
+                collision.gameObject.SetActive(false);
+
+				//Destroy(collision.gameObject);
             }
 
             if (collision.gameObject.CompareTag("SpeedBonus"))
             {
 				rigidBody.velocity = new Vector2(rigidBody.velocity.x + 0.001f, rigidBody.velocity.y + 0.001f);
 				rigidBody.velocity *= 3;
-                Destroy(collision.gameObject);
+
+				pegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
+                collision.gameObject.SetActive(false);
+
+                //Destroy(collision.gameObject);
             }
 
             if (collision.gameObject.CompareTag("ReboundBonus"))
             {
                 reboundWall.SetActive(true);
-                Destroy(collision.gameObject);
+
+				pegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
+                collision.gameObject.SetActive(false);
+
+                //Destroy(collision.gameObject);
             }
 
             if (collision.gameObject.CompareTag("HealthBonus"))
             {
 				isHealthBonusCollect = true;
-                Destroy(collision.gameObject);
+
+                pegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
+                collision.gameObject.SetActive(false);
+
+                //Destroy(collision.gameObject);
             }
 
             if (collision.gameObject.CompareTag("ReboundWall"))
@@ -128,11 +146,27 @@ public class BallBehaviour : MonoBehaviour
 
 	public void FinishGame()
 	{
-		Destroy(this.gameObject);
-	}
+		rigidBody.isKinematic = true;
+		gameObject.SetActive(false);
+
+		//isStart = false;
+
+		//gameBehaviour.isGameStart = false;
+    }
 
 	public void StartGame()
 	{
 		isStart = true;
+	}
+
+	public void StartGameFlagOff()
+	{
+		isStart = false;
+        gameBehaviour.isGameStart = false;
+    }
+
+	public void PlaceBallOnInitialPosition()
+	{
+		transform.position = initialPosition;
 	}
 }

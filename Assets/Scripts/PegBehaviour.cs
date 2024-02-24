@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PegBehaviour : MonoBehaviour
 {
@@ -11,12 +12,11 @@ public class PegBehaviour : MonoBehaviour
 	private BoxCollider2D bottomOuterZone;
 	private CircleCollider2D outerBall;
 	private GameBehaviour gameBehaviour;
-	private MousePointerBehaviour mousePointer;
 
 	protected GameObject ball;
 	protected BallBehaviour ballScript;
 	protected Rigidbody2D rigidBody;
-
+	
 	protected virtual void Start()
     {
 		rigidBody = GetComponent<Rigidbody2D>();
@@ -29,7 +29,6 @@ public class PegBehaviour : MonoBehaviour
 		outerBall = transform.GetChild(0).GetComponent<CircleCollider2D>();
 
 		gameBehaviour = FindObjectOfType<GameBehaviour>();
-		mousePointer = FindAnyObjectByType<MousePointerBehaviour>();
 	}
 
     // Update is called once per frame
@@ -85,17 +84,8 @@ public class PegBehaviour : MonoBehaviour
 	{
 		if (gameBehaviour.isGameStart && !isCanPlace)
 		{
-			gameObject.SetActive(false);
-			//Destroy(gameObject);
-		}
-	}
-
-	public void ShowUnusedPegs()
-	{
-		if (!gameBehaviour.isGameStart && !isCanPlace)
-		{
-			gameObject.SetActive(true);
-		}
+            gameObject.SetActive(false);
+        }
 	}
 
 	private void OnMouseDown()

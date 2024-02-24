@@ -8,11 +8,11 @@ public class ScoreBehaviour : MonoBehaviour
     public int playerScore;
     public int scoreScaler = 10;
     public int pointsBonusQuantity = 100;
+    [HideInInspector] public int pointsBonusesCollectCount = 0;
 
     private GameObject ball;
     private BallBehaviour ballScript;
 
-    private int pointsBonusesCollectCount = 0;
 
     [SerializeField]
     private TMP_Text _textMeshPro;

@@ -36,7 +36,10 @@ public class PegsArrangementBehaviour : MonoBehaviour
     [SerializeField] List<GameObject> reboundBonusesList = new List<GameObject>();
     [SerializeField] List<GameObject> healthBonusesList = new List<GameObject>();
 
-
+    [HideInInspector] public List<GameObject> listOfCollectBonuses = new List<GameObject>();
+    [SerializeField] private BallBehaviour ballScript;
+    [SerializeField] private ScoreBehaviour scoreBehaviour;
+    [SerializeField] private GameBehaviour gameBehaviour;
     private void Start()
     {
         if (!PlayerPrefs.HasKey(currentLevelKey))
@@ -49,10 +52,13 @@ public class PegsArrangementBehaviour : MonoBehaviour
 
     private void Update()
     {
-        PlaceCommonPeg();
-        PlaceJumpPeg();
-        DisplayPegsCount();
-	}
+        if (!gameBehaviour.isGameStart)
+        {
+            PlaceCommonPeg();
+            PlaceJumpPeg();
+            DisplayPegsCount();
+        }
+    }
 
     private void PlaceCommonPeg()
     {
@@ -80,12 +86,9 @@ public class PegsArrangementBehaviour : MonoBehaviour
 
     private void DisplayPegsCount()
     {
-		if (!ballBehaviour.isStart)
-        {
-            commonPegCountDisplay.text = (commonPegsCount + CheckUnusedPegCount(commonPegsInstances)).ToString();
-            jumpPegCountDisplay.text = (jumpPegsCount + CheckUnusedPegCount(jumpPegsInstances)).ToString();
-        }
-	}
+        commonPegCountDisplay.text = (commonPegsCount + CheckUnusedPegCount(commonPegsInstances)).ToString();
+        jumpPegCountDisplay.text = (jumpPegsCount + CheckUnusedPegCount(jumpPegsInstances)).ToString();
+    }
 
     private int CheckUnusedPegCount(List<PegBehaviour> pegs)
     {
@@ -186,5 +189,37 @@ public class PegsArrangementBehaviour : MonoBehaviour
             case 2:
                 jumpPegIsPlaced = true; break;
         }
+    }
+
+    public void LoseRestartGame()
+    {
+        //commonPegsCount++;
+        //jumpPegsCount++;
+
+        commonPegIsPlaced = false;
+        jumpPegIsPlaced = false;
+
+        foreach (var commonPeg in commonPegsInstances)
+        {
+            if (!commonPeg.gameObject.activeSelf)
+                commonPeg.gameObject.SetActive(true);
+        }
+
+        foreach (var jumpPeg in jumpPegsInstances)
+        {
+            if (!jumpPeg.gameObject.activeSelf)
+                jumpPeg.gameObject.SetActive(true);
+        }
+
+        foreach (var bonus in listOfCollectBonuses)
+        {
+            bonus.SetActive(true);
+        }
+
+        ballScript.PlaceBallOnInitialPosition();
+        ballScript.touchCount = 0;
+
+        scoreBehaviour.playerScore = 0;
+        scoreBehaviour.pointsBonusesCollectCount = 0;
     }
 }

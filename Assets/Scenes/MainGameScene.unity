@@ -763,14 +763,62 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 201925624}
-        m_TargetAssemblyTypeName: SceneBehaviour, Assembly-CSharp
-        m_MethodName: LoadSceneByIndex
-        m_Mode: 3
+      - m_Target: {fileID: 2057138378}
+        m_TargetAssemblyTypeName: PegsArrangementBehaviour, Assembly-CSharp
+        m_MethodName: LoseRestartGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1589184237}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: GameOverPanelOffAnim
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1584524500}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: GameBottomPanelLoseAnim
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2123338229}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2123338231}
+        m_TargetAssemblyTypeName: BallBehaviour, Assembly-CSharp
+        m_MethodName: StartGameFlagOff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3734,6 +3782,7 @@ MonoBehaviour:
   playerScore: 0
   scoreScaler: 10
   pointsBonusQuantity: 100
+  pointsBonusesCollectCount: 0
   _textMeshPro: {fileID: 793716485}
 --- !u!1 &543329871
 GameObject:
@@ -5672,7 +5721,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -316, y: -20}
+  m_AnchoredPosition: {x: -328, y: -7}
   m_SizeDelta: {x: 344.81, y: 116.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &864619636
@@ -5729,8 +5778,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -9725,18 +9774,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1682544210}
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1318340137}
   m_Father: {fileID: 2000688888}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 315.02002, y: 1.0100098}
-  m_SizeDelta: {x: 180, y: 240}
+  m_AnchoredPosition: {x: 307, y: -0.0000038147}
+  m_SizeDelta: {x: 140.86, y: 139.38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1682544212
 MonoBehaviour:
@@ -9874,7 +9923,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4b9b4f7d248e12f4497abf96cfb75ab2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cf429b7ac4a19ab4a8069357eb27fa26, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10764,7 +10813,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2035038210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10777,6 +10826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b89ebf419009ee43b88e8ce2d1f6e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMouseInStartZone: 0
 --- !u!212 &2035038211
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10784,7 +10834,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035038209}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -10931,7 +10981,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2057138378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10965,6 +11015,10 @@ MonoBehaviour:
   - {fileID: 5842494}
   healthBonusesList:
   - {fileID: 963863715}
+  listOfCollectBonuses: []
+  ballScript: {fileID: 2123338231}
+  scoreBehaviour: {fileID: 538508159}
+  gameBehaviour: {fileID: 497815413}
 --- !u!4 &2057138379
 Transform:
   m_ObjectHideFlags: 0

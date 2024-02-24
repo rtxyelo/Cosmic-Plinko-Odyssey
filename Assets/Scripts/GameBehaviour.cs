@@ -71,7 +71,7 @@ public class GameBehaviour : MonoBehaviour
     {
         if (scoreScript != null)
         {
-            if (ballScript.isStart && !ball)
+            if (ballScript.isStart && !ball.activeSelf)
             {
                 int curLvlValue = PlayerPrefs.GetInt(currentLevelKey, 1);
                 if (scoreScript.playerScore >= winScore[curLvlValue - 1])
@@ -82,6 +82,11 @@ public class GameBehaviour : MonoBehaviour
                 {
                     GameLose();
                 }
+            }
+            else
+            {
+                winPanel.SetActive(false);
+                losePanel.SetActive(false);
             }
         }
     }
@@ -95,10 +100,10 @@ public class GameBehaviour : MonoBehaviour
                 PlayerPrefs.SetInt(maxLevelKey, PlayerPrefs.GetInt(maxLevelKey, 1) + 1);
                 Debug.Log("Max Level Key " + PlayerPrefs.GetInt(maxLevelKey, 0));
             }
-            HideBonuses();
+            //HideBonuses();
             winPanelScoreText.text = "Score: " + scoreScript.playerScore.ToString();
 			winPanel.SetActive(true);
-            pegsSpawnPoints.SetActive(false);
+            //pegsSpawnPoints.SetActive(false);
             winPanelAnim.Play("GameOverPanelOnAnim");
         }
 	}
@@ -107,10 +112,10 @@ public class GameBehaviour : MonoBehaviour
     {
         if (!losePanel.activeSelf)
         {
-            HideBonuses();
+            //HideBonuses();
             losePanelScoreText.text = "Score: " + scoreScript.playerScore.ToString();
 			losePanel.SetActive(true);
-            pegsSpawnPoints.SetActive(false);
+            //pegsSpawnPoints.SetActive(false);
             losePanelAnim.Play("GameOverPanelOnAnim");
         }
 	}
