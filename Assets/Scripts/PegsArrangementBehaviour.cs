@@ -20,6 +20,8 @@ public class PegsArrangementBehaviour : MonoBehaviour
     [SerializeField] private GameObject commonPegPrefab;
     [SerializeField] private GameObject jumpPegPrefab;
 
+    [SerializeField] private BallBehaviour ballBehaviour;
+
     private List<PegBehaviour> commonPegsInstances = new List<PegBehaviour>();
     private List<PegBehaviour> jumpPegsInstances = new List<PegBehaviour>();
 
@@ -29,6 +31,12 @@ public class PegsArrangementBehaviour : MonoBehaviour
     private bool commonPegIsPlaced = true;
     private bool jumpPegIsPlaced = true;
 
+    [SerializeField] List<GameObject> pointsBonusesList = new List<GameObject>();
+    [SerializeField] List<GameObject> speedBonusesList = new List<GameObject>();
+    [SerializeField] List<GameObject> reboundBonusesList = new List<GameObject>();
+    [SerializeField] List<GameObject> healthBonusesList = new List<GameObject>();
+
+
     private void Start()
     {
         if (!PlayerPrefs.HasKey(currentLevelKey))
@@ -37,7 +45,6 @@ public class PegsArrangementBehaviour : MonoBehaviour
         }
         currentLevelValue = PlayerPrefs.GetInt(currentLevelKey, 1);
         CalculatePegsCountByLvl(currentLevelValue);
-
     }
 
     private void Update()
@@ -73,8 +80,11 @@ public class PegsArrangementBehaviour : MonoBehaviour
 
     private void DisplayPegsCount()
     {
-		commonPegCountDisplay.text = (commonPegsCount + CheckUnusedPegCount(commonPegsInstances)).ToString();
-		jumpPegCountDisplay.text = (jumpPegsCount + CheckUnusedPegCount(jumpPegsInstances)).ToString();
+		if (!ballBehaviour.isStart)
+        {
+            commonPegCountDisplay.text = (commonPegsCount + CheckUnusedPegCount(commonPegsInstances)).ToString();
+            jumpPegCountDisplay.text = (jumpPegsCount + CheckUnusedPegCount(jumpPegsInstances)).ToString();
+        }
 	}
 
     private int CheckUnusedPegCount(List<PegBehaviour> pegs)
@@ -96,53 +106,72 @@ public class PegsArrangementBehaviour : MonoBehaviour
         {
             case 1:
                 {
-                    commonPegsCount = 3;
-                    jumpPegsCount = 1;
+                    commonPegsCount = 5;
+                    jumpPegsCount = 0;
+                    pointsBonusesList[0].SetActive(true);
                     break;
                 }
             case 2:
                 {
-
+                    commonPegsCount = 7;
+                    jumpPegsCount = 1;
+                    pointsBonusesList[1].SetActive(true);
+                    speedBonusesList[0].SetActive(true);
                     break;
                 }
             case 3:
                 {
-
+                    commonPegsCount = 8;
+                    jumpPegsCount = 2;
+                    pointsBonusesList[2].SetActive(true);
+                    speedBonusesList[1].SetActive(true);
+                    reboundBonusesList[0].SetActive(true);
                     break;
                 }
             case 4:
                 {
-
+                    commonPegsCount = 9;
+                    jumpPegsCount = 1;
+                    pointsBonusesList[3].SetActive(true);
+                    speedBonusesList[2].SetActive(true);
+                    reboundBonusesList[1].SetActive(true);
+                    healthBonusesList[0].SetActive(true);
                     break;
                 }
             case 5:
                 {
-
+                    commonPegsCount = 8;
+                    jumpPegsCount = 3;
                     break;
                 }
             case 6:
                 {
-
+                    commonPegsCount = 9;
+                    jumpPegsCount = 3;
                     break;
                 }
             case 7:
                 {
-
+                    commonPegsCount = 10;
+                    jumpPegsCount = 2;
                     break;
                 }
             case 8:
                 {
-
+                    commonPegsCount = 11;
+                    jumpPegsCount = 3;
                     break;
                 }
             case 9:
                 {
-
+                    commonPegsCount = 12;
+                    jumpPegsCount = 4;
                     break;
                 }
             case 10:
                 {
-
+                    commonPegsCount = 15;
+                    jumpPegsCount = 5;
                     break;
                 }
         }

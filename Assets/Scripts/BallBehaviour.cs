@@ -9,19 +9,27 @@ public class BallBehaviour : MonoBehaviour
 
 	public int touchCount = 0;
 
+	[SerializeField] private GameObject reboundWall;
+
     private Rigidbody2D rigidBody;
     private PhysicsMaterial2D ballMaterial;
 	private GameBehaviour gameBehaviour;
+    private ScoreBehaviour scoreBehaviour;
 
-	private Vector2 ballSpeed = Vector2.zero;
+    private Vector2 ballSpeed = Vector2.zero;
 	private float ballGravity = 0;
 	private bool isGameBeenPaused = false;
+	private Vector3 initialPosition;
+	private bool isHealthBonusCollect = false;
 
-    // Start is called before the first frame update
     void Start()
     {
+		initialPosition = transform.position;
+
 		gameBehaviour = FindObjectOfType<GameBehaviour>();
-		rigidBody = GetComponent<Rigidbody2D>();
+		scoreBehaviour = FindObjectOfType<ScoreBehaviour>();
+
+        rigidBody = GetComponent<Rigidbody2D>();
 		ballMaterial = rigidBody.sharedMaterial;
 
 		ballMaterial.bounciness = bounciness;
@@ -71,7 +79,12 @@ public class BallBehaviour : MonoBehaviour
 	{
 	    if(collision != null)
         {
-            if (collision.gameObject.CompareTag("Exit"))
+			if (collision.gameObject.CompareTag("Exit") && isHealthBonusCollect)
+			{
+				transform.position = initialPosition;
+				isHealthBonusCollect = false;
+            }
+            else if (collision.gameObject.CompareTag("Exit"))
             {
 				FinishGame();
             }
@@ -80,6 +93,36 @@ public class BallBehaviour : MonoBehaviour
 			{
 				touchCount++;
 			}
+
+			if (collision.gameObject.CompareTag("PointsBonus"))
+			{
+				scoreBehaviour.PointsBonusCollect();
+				Destroy(collision.gameObject);
+            }
+
+            if (collision.gameObject.CompareTag("SpeedBonus"))
+            {
+				rigidBody.velocity = new Vector2(rigidBody.velocity.x + 0.001f, rigidBody.velocity.y + 0.001f);
+				rigidBody.velocity *= 3;
+                Destroy(collision.gameObject);
+            }
+
+            if (collision.gameObject.CompareTag("ReboundBonus"))
+            {
+                reboundWall.SetActive(true);
+                Destroy(collision.gameObject);
+            }
+
+            if (collision.gameObject.CompareTag("HealthBonus"))
+            {
+				isHealthBonusCollect = true;
+                Destroy(collision.gameObject);
+            }
+
+            if (collision.gameObject.CompareTag("ReboundWall"))
+            {
+                reboundWall.SetActive(false);
+            }
         }
 	}
 

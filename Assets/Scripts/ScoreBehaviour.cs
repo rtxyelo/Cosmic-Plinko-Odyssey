@@ -7,9 +7,12 @@ public class ScoreBehaviour : MonoBehaviour
 {
     public int playerScore;
     public int scoreScaler = 10;
+    public int pointsBonusQuantity = 100;
 
     private GameObject ball;
     private BallBehaviour ballScript;
+
+    private int pointsBonusesCollectCount = 0;
 
     [SerializeField]
     private TMP_Text _textMeshPro;
@@ -40,6 +43,12 @@ public class ScoreBehaviour : MonoBehaviour
 
     private void ScoreUpdate()
     {
-        playerScore = ballScript.touchCount * scoreScaler;
-	}
+        playerScore = ballScript.touchCount * scoreScaler + pointsBonusesCollectCount * pointsBonusQuantity;
+    }
+
+    public void PointsBonusCollect()
+    {
+        pointsBonusesCollectCount++;
+        Debug.Log("Points bonus collect!");
+    }
 }

@@ -20,6 +20,10 @@ public class GameBehaviour : MonoBehaviour
     private GameObject winPanel;
     [SerializeField]
     private GameObject losePanel;
+    [SerializeField]
+    private GameObject pegsSpawnPoints;
+
+    [SerializeField] List<GameObject> bonusesList = new List<GameObject>();
 
     private Animator winPanelAnim;
     private Animator losePanelAnim;
@@ -32,9 +36,10 @@ public class GameBehaviour : MonoBehaviour
 	private BallBehaviour ballScript;
 
 	private string currentLevelKey = "CurrentLevel";
+    private string maxLevelKey = "MaxLevel";
 
-	// Start is called before the first frame update
-	void Start()
+    // Start is called before the first frame update
+    void Start()
     {
         isGameStart = false;
 		scoreScript = FindObjectOfType<ScoreBehaviour>();
@@ -85,8 +90,15 @@ public class GameBehaviour : MonoBehaviour
     {
         if (!winPanel.activeSelf)
         {
-			winPanelScoreText.text = "Score: " + scoreScript.playerScore.ToString();
+            if (PlayerPrefs.GetInt(currentLevelKey, 1) + 1 > PlayerPrefs.GetInt(maxLevelKey, 1))
+            {
+                PlayerPrefs.SetInt(maxLevelKey, PlayerPrefs.GetInt(maxLevelKey, 1) + 1);
+                Debug.Log("Max Level Key " + PlayerPrefs.GetInt(maxLevelKey, 0));
+            }
+            HideBonuses();
+            winPanelScoreText.text = "Score: " + scoreScript.playerScore.ToString();
 			winPanel.SetActive(true);
+            pegsSpawnPoints.SetActive(false);
             winPanelAnim.Play("GameOverPanelOnAnim");
         }
 	}
@@ -95,14 +107,30 @@ public class GameBehaviour : MonoBehaviour
     {
         if (!losePanel.activeSelf)
         {
-			losePanelScoreText.text = "Score: " + scoreScript.playerScore.ToString();
+            HideBonuses();
+            losePanelScoreText.text = "Score: " + scoreScript.playerScore.ToString();
 			losePanel.SetActive(true);
+            pegsSpawnPoints.SetActive(false);
             losePanelAnim.Play("GameOverPanelOnAnim");
         }
 	}
+
+    private void HideBonuses()
+    {
+        for (int i = 0; i < bonusesList.Count; i++)
+        {
+            if (bonusesList[i])
+                bonusesList[i].SetActive(false);
+        }
+    }
 
 	public void GameStart()
     {
         isGameStart = true;
 	}
+
+    public void PlayNextLevel()
+    {
+        PlayerPrefs.SetInt(currentLevelKey, PlayerPrefs.GetInt(currentLevelKey, 1) + 1);
+    }
 }

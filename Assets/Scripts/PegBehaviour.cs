@@ -89,8 +89,8 @@ public class PegBehaviour : MonoBehaviour
 
 	private void OnMouseDown()
 	{
-
-        isMouseDrug = true;
+		if (!ballScript.isStart)
+			isMouseDrug = true;
 
 		if (!ballScript.isStart && !gameBehaviour.isGamePaused)
 		{

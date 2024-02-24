@@ -9,6 +9,11 @@ TagManager:
   - Exit
   - Peg
   - Ball
+  - PointsBonus
+  - SpeedBonus
+  - ReboundBonus
+  - HealthBonus
+  - ReboundWall
   layers:
   - Default
   - TransparentFX

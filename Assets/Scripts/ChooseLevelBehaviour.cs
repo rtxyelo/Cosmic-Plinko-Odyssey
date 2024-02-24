@@ -56,6 +56,7 @@ public class ChooseLevelBehaviour : MonoBehaviour
         else if (lvl <= PlayerPrefs.GetInt(maxLevelKey, 1000))
         {
             PlayerPrefs.SetInt(currentLevelKey, lvl);
+            Debug.Log("currentLevelKey " + PlayerPrefs.GetInt(currentLevelKey, 0));
 
             int btnInd = 1;
             foreach (Image buttonImg in listOfButtonImages)
