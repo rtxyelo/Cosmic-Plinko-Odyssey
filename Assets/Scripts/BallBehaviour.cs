@@ -13,9 +13,7 @@ public class BallBehaviour : MonoBehaviour
 
     private Rigidbody2D rigidBody;
     private PhysicsMaterial2D ballMaterial;
-	private GameBehaviour gameBehaviour;
     private ScoreBehaviour scoreBehaviour;
-    private PegsArrangementBehaviour pegsArrangementBehaviour;
 
     private Vector2 ballSpeed = Vector2.zero;
 	private float ballGravity = 0;
@@ -26,9 +24,7 @@ public class BallBehaviour : MonoBehaviour
     void Start()
     {
 		initialPosition = transform.position;
-        pegsArrangementBehaviour = GameObject.Find("PegsArrangementBehaviour").GetComponent<PegsArrangementBehaviour>();
 
-        gameBehaviour = FindObjectOfType<GameBehaviour>();
 		scoreBehaviour = FindObjectOfType<ScoreBehaviour>();
 
         rigidBody = GetComponent<Rigidbody2D>();
@@ -57,7 +53,7 @@ public class BallBehaviour : MonoBehaviour
 			rigidBody.isKinematic = false;
 		}
 
-		if (gameBehaviour.isGamePaused)
+		if (GameBehaviour.isGamePaused)
 		{
 			rigidBody.velocity = Vector2.zero;
 			rigidBody.gravityScale = 0;
@@ -100,7 +96,7 @@ public class BallBehaviour : MonoBehaviour
 			{
 				scoreBehaviour.PointsBonusCollect();
 
-                pegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
+                PegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
                 collision.gameObject.SetActive(false);
 
 				//Destroy(collision.gameObject);
@@ -111,7 +107,7 @@ public class BallBehaviour : MonoBehaviour
 				rigidBody.velocity = new Vector2(rigidBody.velocity.x + 0.001f, rigidBody.velocity.y + 0.001f);
 				rigidBody.velocity *= 3;
 
-				pegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
+				PegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
                 collision.gameObject.SetActive(false);
 
                 //Destroy(collision.gameObject);
@@ -121,7 +117,7 @@ public class BallBehaviour : MonoBehaviour
             {
                 reboundWall.SetActive(true);
 
-				pegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
+				PegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
                 collision.gameObject.SetActive(false);
 
                 //Destroy(collision.gameObject);
@@ -131,7 +127,7 @@ public class BallBehaviour : MonoBehaviour
             {
 				isHealthBonusCollect = true;
 
-                pegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
+                PegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
                 collision.gameObject.SetActive(false);
 
                 //Destroy(collision.gameObject);
@@ -148,10 +144,6 @@ public class BallBehaviour : MonoBehaviour
 	{
 		rigidBody.isKinematic = true;
 		gameObject.SetActive(false);
-
-		//isStart = false;
-
-		//gameBehaviour.isGameStart = false;
     }
 
 	public void StartGame()
@@ -162,7 +154,7 @@ public class BallBehaviour : MonoBehaviour
 	public void StartGameFlagOff()
 	{
 		isStart = false;
-        gameBehaviour.isGameStart = false;
+        GameBehaviour.isGameStart = false;
     }
 
 	public void PlaceBallOnInitialPosition()

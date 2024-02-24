@@ -11,7 +11,6 @@ public class PegBehaviour : MonoBehaviour
 	private Image pegImage;
 	private BoxCollider2D bottomOuterZone;
 	private CircleCollider2D outerBall;
-	private GameBehaviour gameBehaviour;
 
 	protected GameObject ball;
 	protected BallBehaviour ballScript;
@@ -27,8 +26,6 @@ public class PegBehaviour : MonoBehaviour
 
 		bottomOuterZone = GameObject.Find("BottomWall").GetComponent<BoxCollider2D>();
 		outerBall = transform.GetChild(0).GetComponent<CircleCollider2D>();
-
-		gameBehaviour = FindObjectOfType<GameBehaviour>();
 	}
 
     // Update is called once per frame
@@ -55,9 +52,9 @@ public class PegBehaviour : MonoBehaviour
 
 	private void PegMoveController()
 	{
-		if(gameBehaviour.isGameStart)
+		if(GameBehaviour.isGameStart)
 			return;
-		if(gameBehaviour.isGamePaused) 
+		if(GameBehaviour.isGamePaused) 
 			return;
 
         Vector3 cursor = Input.mousePosition;
@@ -82,7 +79,7 @@ public class PegBehaviour : MonoBehaviour
 
 	private void HideUnusedPegs()
 	{
-		if (gameBehaviour.isGameStart && !isCanPlace)
+		if (GameBehaviour.isGameStart && !isCanPlace)
 		{
             gameObject.SetActive(false);
         }
@@ -93,7 +90,7 @@ public class PegBehaviour : MonoBehaviour
 		if (!ballScript.isStart)
 			isMouseDrug = true;
 
-		if (!ballScript.isStart && !gameBehaviour.isGamePaused)
+		if (!ballScript.isStart && !GameBehaviour.isGamePaused)
 		{
 			pegImage.enabled = true;
 		}

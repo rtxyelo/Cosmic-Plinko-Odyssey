@@ -10,9 +10,9 @@ public class GameBehaviour : MonoBehaviour
     public int[] winScore = {40, 100, 200, 300, 500, 1000, 2000, 3000, 5000, 10000 };
 
     [HideInInspector]
-    public bool isGameStart = false;
+    public static bool isGameStart = false;
 	[HideInInspector]
-	public bool isGamePaused = false;
+	public static bool isGamePaused = false;
 
 	[SerializeField]
     private GameObject pausePanel;
@@ -31,7 +31,6 @@ public class GameBehaviour : MonoBehaviour
     private TMP_Text winPanelScoreText;
     private TMP_Text losePanelScoreText;
 
-    private ScoreBehaviour scoreScript;
 	private GameObject ball;
 	private BallBehaviour ballScript;
 
@@ -42,11 +41,6 @@ public class GameBehaviour : MonoBehaviour
     void Start()
     {
         isGameStart = false;
-		scoreScript = FindObjectOfType<ScoreBehaviour>();
-        if(scoreScript == null)
-        {
-            Debug.Log("Score script not found");
-        }
 
 		ball = GameObject.FindGameObjectWithTag("Ball");
 		ballScript = ball.GetComponent<BallBehaviour>();
@@ -69,25 +63,22 @@ public class GameBehaviour : MonoBehaviour
 
     void GameOverCheckUpdate()
     {
-        if (scoreScript != null)
+        if (ballScript.isStart && !ball.activeSelf)
         {
-            if (ballScript.isStart && !ball.activeSelf)
+            int curLvlValue = PlayerPrefs.GetInt(currentLevelKey, 1);
+            if (ScoreBehaviour.playerScore >= winScore[curLvlValue - 1])
             {
-                int curLvlValue = PlayerPrefs.GetInt(currentLevelKey, 1);
-                if (scoreScript.playerScore >= winScore[curLvlValue - 1])
-                {
-                    GameWin();
-                }
-                else
-                {
-                    GameLose();
-                }
+                GameWin();
             }
             else
             {
-                winPanel.SetActive(false);
-                losePanel.SetActive(false);
+                GameLose();
             }
+        }
+        else
+        {
+            winPanel.SetActive(false);
+            losePanel.SetActive(false);
         }
     }
 
@@ -101,7 +92,7 @@ public class GameBehaviour : MonoBehaviour
                 Debug.Log("Max Level Key " + PlayerPrefs.GetInt(maxLevelKey, 0));
             }
             //HideBonuses();
-            winPanelScoreText.text = "Score: " + scoreScript.playerScore.ToString();
+            winPanelScoreText.text = "Score: " + ScoreBehaviour.playerScore.ToString();
 			winPanel.SetActive(true);
             //pegsSpawnPoints.SetActive(false);
             winPanelAnim.Play("GameOverPanelOnAnim");
@@ -113,7 +104,7 @@ public class GameBehaviour : MonoBehaviour
         if (!losePanel.activeSelf)
         {
             //HideBonuses();
-            losePanelScoreText.text = "Score: " + scoreScript.playerScore.ToString();
+            losePanelScoreText.text = "Score: " + ScoreBehaviour.playerScore.ToString();
 			losePanel.SetActive(true);
             //pegsSpawnPoints.SetActive(false);
             losePanelAnim.Play("GameOverPanelOnAnim");

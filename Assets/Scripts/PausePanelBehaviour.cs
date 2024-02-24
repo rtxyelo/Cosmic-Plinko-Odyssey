@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class PausePanelBehaviour : MonoBehaviour
 {
-	private GameBehaviour gameBehaviour;
-
-	void Start()
-	{
-		gameBehaviour = FindObjectOfType<GameBehaviour>();
-	}
-
 	public void PauseGame() 
 	{
-		gameBehaviour.isGamePaused = true;
+		GameBehaviour.isGamePaused = true;
 	}
 
 	public void ContinueGame()
 	{
-		gameBehaviour.isGamePaused = false;
+		GameBehaviour.isGamePaused = false;
 	}
 }

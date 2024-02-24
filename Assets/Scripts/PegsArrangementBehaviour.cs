@@ -36,10 +36,9 @@ public class PegsArrangementBehaviour : MonoBehaviour
     [SerializeField] List<GameObject> reboundBonusesList = new List<GameObject>();
     [SerializeField] List<GameObject> healthBonusesList = new List<GameObject>();
 
-    [HideInInspector] public List<GameObject> listOfCollectBonuses = new List<GameObject>();
+    [HideInInspector] public static List<GameObject> listOfCollectBonuses = new List<GameObject>();
     [SerializeField] private BallBehaviour ballScript;
-    [SerializeField] private ScoreBehaviour scoreBehaviour;
-    [SerializeField] private GameBehaviour gameBehaviour;
+
     private void Start()
     {
         if (!PlayerPrefs.HasKey(currentLevelKey))
@@ -52,7 +51,7 @@ public class PegsArrangementBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if (!gameBehaviour.isGameStart)
+        if (!GameBehaviour.isGameStart)
         {
             PlaceCommonPeg();
             PlaceJumpPeg();
@@ -193,9 +192,6 @@ public class PegsArrangementBehaviour : MonoBehaviour
 
     public void LoseRestartGame()
     {
-        //commonPegsCount++;
-        //jumpPegsCount++;
-
         commonPegIsPlaced = false;
         jumpPegIsPlaced = false;
 
@@ -219,7 +215,7 @@ public class PegsArrangementBehaviour : MonoBehaviour
         ballScript.PlaceBallOnInitialPosition();
         ballScript.touchCount = 0;
 
-        scoreBehaviour.playerScore = 0;
-        scoreBehaviour.pointsBonusesCollectCount = 0;
+        ScoreBehaviour.playerScore = 0;
+        ScoreBehaviour.pointsBonusesCollectCount = 0;
     }
 }

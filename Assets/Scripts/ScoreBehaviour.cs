@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class ScoreBehaviour : MonoBehaviour
 {
-    public int playerScore;
-    public int scoreScaler = 10;
-    public int pointsBonusQuantity = 100;
-    [HideInInspector] public int pointsBonusesCollectCount = 0;
+    public static int playerScore;
+    [SerializeField] private int scoreScaler = 10;
+    [SerializeField] public int pointsBonusQuantity = 100;
+    public static int pointsBonusesCollectCount = 0;
 
     private GameObject ball;
     private BallBehaviour ballScript;
