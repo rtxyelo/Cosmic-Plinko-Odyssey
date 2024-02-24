@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class GameBehaviour : MonoBehaviour
 {
-    public int[] winScore = {40, 100, 200, 300, 500, 1000, 2000, 3000, 5000, 10000 };
+    public static int[] winScore = { 40, 100, 200, 300, 500, 1000, 2000, 3000, 5000, 10000 };
 
     [HideInInspector]
     public static bool isGameStart = false;
@@ -125,6 +125,7 @@ public class GameBehaviour : MonoBehaviour
         isGameStart = true;
 	}
 
+    // Todo: final level congrads
     public void PlayNextLevel()
     {
         PlayerPrefs.SetInt(currentLevelKey, PlayerPrefs.GetInt(currentLevelKey, 1) + 1);
