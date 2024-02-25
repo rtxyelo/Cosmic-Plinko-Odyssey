@@ -1565,6 +1565,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 137623243}
   m_CullTransparentMesh: 1
+--- !u!1 &142293902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 142293904}
+  - component: {fileID: 142293903}
+  m_Layer: 0
+  m_Name: PegStartColliderBehaviour
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &142293903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142293902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7722d8faa85af4040b9e26c5d0e51b3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPegs: []
+  playingAreaPegs: []
+--- !u!4 &142293904
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142293902}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.56671935, y: 0.010095721, z: -1.7128899}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &143989993
 GameObject:
   m_ObjectHideFlags: 0
@@ -12904,6 +12950,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMouseInStartZone: 0
+  isPegCanPlaced: 0
+  LayersToCollide:
+    serializedVersion: 2
+    m_Bits: 510
 --- !u!212 &2035038211
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13499,5 +13549,6 @@ SceneRoots:
   - {fileID: 2057138379}
   - {fileID: 201925625}
   - {fileID: 497815414}
+  - {fileID: 142293904}
   - {fileID: 2035038212}
   - {fileID: 1359416393}

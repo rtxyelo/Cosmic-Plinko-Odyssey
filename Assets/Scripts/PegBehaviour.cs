@@ -12,6 +12,7 @@ public class PegBehaviour : MonoBehaviour
 
 	private BoxCollider2D bottomOuterZone;
 	private CircleCollider2D outerBall;
+	private CircleCollider2D pegCollider;
 	private MousePointerBehaviour mousePointer;
 
 	protected Image pegImage;
@@ -24,6 +25,7 @@ public class PegBehaviour : MonoBehaviour
 	{
         rigidBody = GetComponent<Rigidbody2D>();
 		pegImage = GetComponent<Image>();
+		pegCollider = GetComponent<CircleCollider2D>();
 
 		ball = GameObject.FindGameObjectWithTag("Ball");
 		if (ball != null)
@@ -43,19 +45,20 @@ public class PegBehaviour : MonoBehaviour
 		CheckCollision();
 		HideUnusedPegs();
 		//RespawnUnusedPegs();
+		TeleportPegToMouse();
 	}
 
 	private void CheckCollision()
 	{
 		if (isMouseDrug && !isCanPlace || mousePointer.isMouseInStartZone && isMouseDrug && isCanPlace)
 		//if (isMouseDrug && !isCanPlace)
-        {
-            Physics2D.IgnoreCollision(bottomOuterZone, this.gameObject.GetComponent<CircleCollider2D>());
+		{
+			Physics2D.IgnoreCollision(bottomOuterZone, pegCollider);
 			Physics2D.IgnoreCollision(bottomOuterZone, outerBall);
 		}
 		else
 		{
-			Physics2D.IgnoreCollision(bottomOuterZone, this.gameObject.GetComponent<CircleCollider2D>(), false);
+			Physics2D.IgnoreCollision(bottomOuterZone, pegCollider, false);
 			Physics2D.IgnoreCollision(bottomOuterZone, outerBall, false);
 		}
 	}
@@ -108,6 +111,18 @@ public class PegBehaviour : MonoBehaviour
 		}
 	}
 
+	private void TeleportPegToMouse()
+	{
+		var mousePos = mousePointer.gameObject.transform.position;
+		if(Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(mousePos.x, mousePos.y)) > 2f)
+		{
+			if (isMouseDrug && mousePointer.isPegCanPlaced || isMouseDrug && mousePointer.isMouseInStartZone)
+			{
+				gameObject.transform.position = new Vector3(mousePos.x, mousePos.y, transform.position.z);
+			}
+		}
+	}
+
 	private void OnDestroy()
 	{
 		Debug.Log("Destroy peg");
@@ -156,6 +171,52 @@ public class PegBehaviour : MonoBehaviour
 				{
 					Debug.Log("isPegBeenPlaced " + isPegBeenPlaced);
 					isPegBeenPlaced = true;
+				}
+			}
+		}
+	}
+
+	private void OnCollisionStay2D(Collision2D collision)
+	{
+		if (collision != null)
+		{
+			if (collision.gameObject.CompareTag("Peg"))
+			{
+				PegBehaviour collidePeg = collision.gameObject.GetComponent<PegBehaviour>();
+				Collider2D colliderCollidePeg = collidePeg.GetComponent<CircleCollider2D>();
+				Collider2D ballCollidePeg = collidePeg.transform.GetChild(0).GetComponent<CircleCollider2D>();
+
+				Debug.Log("Peg collision Enter " + collidePeg.gameObject.name);
+
+				if (isMouseDrug && !collidePeg.isPegClicked)
+				{
+					Physics2D.IgnoreCollision(colliderCollidePeg, pegCollider);
+					Physics2D.IgnoreCollision(colliderCollidePeg, outerBall);
+					Physics2D.IgnoreCollision(ballCollidePeg, pegCollider);
+					Physics2D.IgnoreCollision(ballCollidePeg, outerBall);
+				}
+			}
+		}
+	}
+
+	private void OnCollisionExit2D(Collision2D collision)
+	{
+		if (collision != null)
+		{
+			if (collision.gameObject.CompareTag("Peg"))
+			{
+				PegBehaviour collidePeg = collision.gameObject.GetComponent<PegBehaviour>();
+				Collider2D colliderCollidePeg = collidePeg.GetComponent<CircleCollider2D>();
+				Collider2D ballCollidePeg = collidePeg.transform.GetChild(0).GetComponent<CircleCollider2D>();
+
+				Debug.Log("Peg collision Exit " + collidePeg.gameObject.name);
+
+				if (isMouseDrug && !collidePeg.isPegClicked)
+				{
+					Physics2D.IgnoreCollision(colliderCollidePeg, pegCollider, false);
+					Physics2D.IgnoreCollision(colliderCollidePeg, outerBall, false);
+					Physics2D.IgnoreCollision(ballCollidePeg, pegCollider, false);
+					Physics2D.IgnoreCollision(ballCollidePeg, outerBall, false);
 				}
 			}
 		}

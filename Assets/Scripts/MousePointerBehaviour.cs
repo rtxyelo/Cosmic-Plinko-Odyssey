@@ -7,14 +7,20 @@ public class MousePointerBehaviour : MonoBehaviour
 {
     //[HideInInspector]
     public bool isMouseInStartZone = false;
+	//[HideInInspector]
+	public bool isPegCanPlaced = false;
 
     private Collider2D collision;
+    private Collider2D pegPlaceCollision;
+
+    [SerializeField]
+    private LayerMask LayersToCollide;
 
 	// Start is called before the first frame update
 	void Start()
     {
         isMouseInStartZone = false;
-
+		isPegCanPlaced = false;
 	}
 
     // Update is called once per frame
@@ -22,6 +28,7 @@ public class MousePointerBehaviour : MonoBehaviour
     {
         MoveController();
         CheckOverlap();
+		CheckPegSpaceOverlap();
 	}
 
     void MoveController()
@@ -33,6 +40,14 @@ public class MousePointerBehaviour : MonoBehaviour
     {
 		collision = Physics2D.OverlapCircle(transform.position, transform.localScale.x / 2, 1 << 7);
 		isMouseInStartZone = collision != null;
+	}
+
+    void CheckPegSpaceOverlap()
+    {
+        int layers = LayersToCollide.value;
+
+		pegPlaceCollision = Physics2D.OverlapCircle(transform.position, transform.localScale.x, layers);
+		isPegCanPlaced = pegPlaceCollision == null;
 	}
 
     Vector3 GetMousePos()
