@@ -17,8 +17,7 @@ public class ScoreBehaviour : MonoBehaviour
     [SerializeField]
     private TMP_Text _textMeshPro;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
 		ball = GameObject.FindGameObjectWithTag("Ball");
 		ballScript = ball.GetComponent<BallBehaviour>();
@@ -26,12 +25,11 @@ public class ScoreBehaviour : MonoBehaviour
 		playerScore = 0;
 	}
 
-	// Update is called once per frame
-	void Update()
+	private void Update()
     {
         SetScore();
         ScoreUpdate();
-	}
+    }
 
     private void SetScore()
     {

@@ -20,6 +20,11 @@ public class PegsArrangementBehaviour : MonoBehaviour
 
     [SerializeField] private GameObject commonPegPrefab;
     [SerializeField] private GameObject jumpPegPrefab;
+    [HideInInspector] public bool isRemoveJumpPegMaterial = false;
+
+    private bool isBonusesTriggersOn = true;
+    private bool isBonusesTriggersOff = true;
+
 
     [SerializeField] private BallBehaviour ballBehaviour;
 
@@ -37,6 +42,14 @@ public class PegsArrangementBehaviour : MonoBehaviour
     [SerializeField] List<GameObject> reboundBonusesList = new List<GameObject>();
     [SerializeField] List<GameObject> healthBonusesList = new List<GameObject>();
 
+
+    List<BoxCollider2D> pointsBonusesListColliders = new List<BoxCollider2D>();
+    List<BoxCollider2D> speedBonusesListColliders = new List<BoxCollider2D>();
+    List<BoxCollider2D> reboundBonusesListColliders = new List<BoxCollider2D>();
+    List<BoxCollider2D> healthBonusesListColliders = new List<BoxCollider2D>();
+
+    private GameObject pauseButton;
+
     [HideInInspector] public static List<GameObject> listOfCollectBonuses = new List<GameObject>();
 
     private void Start()
@@ -47,6 +60,8 @@ public class PegsArrangementBehaviour : MonoBehaviour
         }
         currentLevelValue = PlayerPrefs.GetInt(currentLevelKey, 1);
         CalculatePegsCountByLvl(currentLevelValue);
+        FillListsOfBonusesColliders();
+        pauseButton = GameObject.Find("PauseButton");
     }
 
     private void Update()
@@ -57,17 +72,59 @@ public class PegsArrangementBehaviour : MonoBehaviour
             PlaceJumpPeg();
             DisplayPegsCount();
         }
+
+        if (ballBehaviour.isStart && isBonusesTriggersOn)
+        {
+            isBonusesTriggersOn = false;
+            BonusesColliderTrigger(true);
+        }
+        else if (!ballBehaviour.isStart && isBonusesTriggersOff)
+        {
+            isBonusesTriggersOff = false;
+            BonusesColliderTrigger(false);
+        }
+    }
+
+    private void FillListsOfBonusesColliders()
+    {
+        foreach (var point in pointsBonusesList)
+        {
+            var collider = point.GetComponentsInChildren<BoxCollider2D>();
+            pointsBonusesListColliders.AddRange(collider);
+
+        }
+
+        foreach (var speed in speedBonusesList)
+        {
+            var collider = speed.GetComponentsInChildren<BoxCollider2D>();
+            speedBonusesListColliders.AddRange(collider);
+        }
+
+        foreach (var rebound in reboundBonusesList)
+        {
+            var collider = rebound.GetComponentsInChildren<BoxCollider2D>();
+            reboundBonusesListColliders.AddRange(collider);
+        }
+
+        foreach (var health in healthBonusesList)
+        {
+            var collider = health.GetComponentsInChildren<BoxCollider2D>();
+            healthBonusesListColliders.AddRange(collider);
+        }
+
+
+
     }
 
     private void PlaceCommonPeg()
     {
         if (commonPegsCount > 0 && commonPegIsPlaced)
         {
-			commonPegIsPlaced = false;
+            commonPegIsPlaced = false;
             var go = Instantiate(commonPegPrefab, commonPegPosition);
             go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, 0);
-			commonPegsInstances.Add(go.GetComponent<PegBehaviour>());
-			commonPegsCount--;
+            commonPegsInstances.Add(go.GetComponent<PegBehaviour>());
+            commonPegsCount--;
         }
     }
 
@@ -75,7 +132,7 @@ public class PegsArrangementBehaviour : MonoBehaviour
     {
         if (jumpPegsCount > 0 && jumpPegIsPlaced)
         {
-			jumpPegIsPlaced = false;
+            jumpPegIsPlaced = false;
             var go = Instantiate(jumpPegPrefab, jumpPegPosition);
             go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, 0);
             jumpPegsInstances.Add(go.GetComponent<PegBehaviour>());
@@ -102,7 +159,7 @@ public class PegsArrangementBehaviour : MonoBehaviour
         return count;
     }
 
-	private void CalculatePegsCountByLvl(int currentLvl)
+    private void CalculatePegsCountByLvl(int currentLvl)
     {
         switch (currentLvl)
         {
@@ -194,32 +251,104 @@ public class PegsArrangementBehaviour : MonoBehaviour
     {
         commonPegIsPlaced = false;
         jumpPegIsPlaced = false;
+        isRemoveJumpPegMaterial = true;
+        isBonusesTriggersOff = false;
+        isBonusesTriggersOn = false;
 
         foreach (var commonPeg in commonPegsInstances)
         {
             if (!commonPeg.gameObject.activeSelf)
             {
-				commonPeg.gameObject.SetActive(true);
-			}
-		}
+                commonPeg.gameObject.SetActive(true);
+            }
+        }
 
         foreach (var jumpPeg in jumpPegsInstances)
         {
             if (!jumpPeg.gameObject.activeSelf)
             {
-				jumpPeg.gameObject.SetActive(true);
-			}
-		}
+                jumpPeg.gameObject.SetActive(true);
+            }
+        }
 
         foreach (var bonus in listOfCollectBonuses)
         {
-            bonus.SetActive(true);
+            Debug.Log(bonus);
+            if (bonus != null)
+                bonus.SetActive(true);
         }
 
-		ballBehaviour.PlaceBallOnInitialPosition();
-		ballBehaviour.touchCount = 0;
+        ballBehaviour.PlaceBallOnInitialPosition();
+        ballBehaviour.touchCount = 0;
 
         ScoreBehaviour.playerScore = 0;
         ScoreBehaviour.pointsBonusesCollectCount = 0;
+
+        if (!pauseButton.activeSelf)
+            pauseButton.SetActive(true);
+    }
+
+    private void BonusesColliderTrigger(bool triggerIsOn)
+    {
+        int currentLvl = PlayerPrefs.GetInt(currentLevelKey, 1);
+        switch (currentLvl)
+        {
+            case 1:
+                {
+                    pointsBonusesListColliders[0].isTrigger = triggerIsOn;
+                    break;
+                }
+            case 2:
+                {
+                    pointsBonusesListColliders[1].isTrigger = triggerIsOn;
+                    speedBonusesListColliders[0].isTrigger = triggerIsOn;
+                    break;
+                }
+            case 3:
+                {
+                    pointsBonusesListColliders[2].isTrigger = triggerIsOn;
+                    speedBonusesListColliders[1].isTrigger = triggerIsOn;
+                    reboundBonusesListColliders[0].isTrigger = triggerIsOn;
+                    break;
+                }
+            case 4:
+                {
+                    pointsBonusesListColliders[3].isTrigger = triggerIsOn;
+                    speedBonusesListColliders[2].isTrigger = triggerIsOn;
+                    reboundBonusesListColliders[1].isTrigger = triggerIsOn;
+                    healthBonusesListColliders[0].isTrigger = triggerIsOn;
+                    break;
+                }
+            case 5:
+                {
+
+                    break;
+                }
+            case 6:
+                {
+
+                    break;
+                }
+            case 7:
+                {
+
+                    break;
+                }
+            case 8:
+                {
+
+                    break;
+                }
+            case 9:
+                {
+
+                    break;
+                }
+            case 10:
+                {
+
+                    break;
+                }
+        }
     }
 }

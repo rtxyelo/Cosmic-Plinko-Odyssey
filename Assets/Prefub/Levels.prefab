@@ -1869,9 +1869,23 @@ MonoBehaviour:
   - {fileID: 518959360218854779}
   - {fileID: 5196905675639960330}
   - {fileID: 2016348149058401369}
+  listOfButtonText:
+  - {fileID: 6119416194062544917}
+  - {fileID: 7204271409760703823}
+  - {fileID: 4215119153161716472}
+  - {fileID: 3121862706839248479}
+  - {fileID: 2903616775983293307}
+  - {fileID: 3589484208152854185}
+  - {fileID: 42292818498193921}
+  - {fileID: 2717032578237045531}
+  - {fileID: 6564906005631033730}
+  - {fileID: 6218372421311388231}
   selectLvlSprite: {fileID: 21300000, guid: e662c7b1a55343444bb9d1deb5341c7a, type: 3}
   closedLvlSprite: {fileID: 21300000, guid: 84ae005702a29eb43b6f96b245e016bd, type: 3}
   openedLvlSprite: {fileID: 21300000, guid: 713e7e40bf54f4743b3daa584dbb8ff8, type: 3}
+  selectLvlColor: {r: 0.5764706, g: 0.3529412, b: 1, a: 1}
+  closedLvlColor: {r: 1, g: 0.07980779, b: 0, a: 1}
+  openedLvlColor: {r: 0, g: 1, b: 0.15248537, a: 1}
 --- !u!1 &3353783603688678075
 GameObject:
   m_ObjectHideFlags: 0

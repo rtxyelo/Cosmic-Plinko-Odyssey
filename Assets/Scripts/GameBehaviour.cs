@@ -37,7 +37,8 @@ public class GameBehaviour : MonoBehaviour
 	private string currentLevelKey = "CurrentLevel";
     private string maxLevelKey = "MaxLevel";
 
-    // Start is called before the first frame update
+    private GameObject pauseButton;
+
     void Start()
     {
         isGameStart = false;
@@ -53,6 +54,7 @@ public class GameBehaviour : MonoBehaviour
 
 		winPanelScoreText = winPanel.transform.Find("ScoreText").GetComponent<TMP_Text>();
 		losePanelScoreText = losePanel.transform.Find("ScoreText").GetComponent<TMP_Text>();
+        pauseButton = GameObject.Find("PauseButton");
 	}
 
     // Update is called once per frame
@@ -91,6 +93,7 @@ public class GameBehaviour : MonoBehaviour
                 PlayerPrefs.SetInt(maxLevelKey, PlayerPrefs.GetInt(maxLevelKey, 1) + 1);
                 Debug.Log("Max Level Key " + PlayerPrefs.GetInt(maxLevelKey, 0));
             }
+            pauseButton.SetActive(false);
             //HideBonuses();
             winPanelScoreText.text = "Score: " + ScoreBehaviour.playerScore.ToString();
 			winPanel.SetActive(true);
@@ -103,6 +106,7 @@ public class GameBehaviour : MonoBehaviour
     {
         if (!losePanel.activeSelf)
         {
+            pauseButton.SetActive(false);
             //HideBonuses();
             losePanelScoreText.text = "Score: " + ScoreBehaviour.playerScore.ToString();
 			losePanel.SetActive(true);
@@ -123,7 +127,7 @@ public class GameBehaviour : MonoBehaviour
 	public void GameStart()
     {
         isGameStart = true;
-	}
+    }
 
     // Todo: final level congrads
     public void PlayNextLevel()

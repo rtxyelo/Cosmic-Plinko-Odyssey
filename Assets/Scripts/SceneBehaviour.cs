@@ -46,6 +46,8 @@ public class SceneBehaviour : MonoBehaviour
     {
         GameBehaviour.isGameStart = false;
         GameBehaviour.isGamePaused = false;
+        ScoreBehaviour.playerScore = 0;
+        ScoreBehaviour.pointsBonusesCollectCount = 0;
         RestartScene();
 	}
 
@@ -53,6 +55,8 @@ public class SceneBehaviour : MonoBehaviour
     {
 		GameBehaviour.isGameStart = false;
 		GameBehaviour.isGamePaused = false;
+        ScoreBehaviour.playerScore = 0;
+        ScoreBehaviour.pointsBonusesCollectCount = 0;
         LoadSceneByName(sceneName);
 	}
 

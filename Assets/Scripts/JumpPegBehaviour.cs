@@ -34,6 +34,16 @@ public class JumpPegBehaviour : PegBehaviour
 			rigidBody.sharedMaterial.bounciness = bounciness;
             isMaterialChanged = true;
         }
+        else if (pegsArrangementBehaviour.isRemoveJumpPegMaterial)
+        {
+            OffJumpPegMeterial();
+        }
+    }
+
+    public void OffJumpPegMeterial()
+    {
+        rigidBody.sharedMaterial = null;
+        isMaterialChanged = false;
     }
 
 	protected override void OnTriggerStay2D(Collider2D collision)

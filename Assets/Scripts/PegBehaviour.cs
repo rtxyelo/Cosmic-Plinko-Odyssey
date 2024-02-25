@@ -18,10 +18,20 @@ public class PegBehaviour : MonoBehaviour
 	protected GameObject ball;
 	protected BallBehaviour ballScript;
 	protected Rigidbody2D rigidBody;
+	protected Vector2 initialPegPositionVec2;
+    protected RectTransform pegRectTransform;
 
-	protected virtual void Start()
+    [SerializeField] protected RectTransform commonPegPosition;
+    [SerializeField] protected RectTransform jumpPegPosition;
+
+
+
+    protected virtual void Start()
 	{
-		rigidBody = GetComponent<Rigidbody2D>();
+        pegRectTransform = GetComponent<RectTransform>();
+		initialPegPositionVec2 = new Vector2(pegRectTransform.transform.position.x, pegRectTransform.transform.position.y);
+
+        rigidBody = GetComponent<Rigidbody2D>();
 		pegImage = GetComponent<Image>();
 
 		ball = GameObject.FindGameObjectWithTag("Ball");
@@ -44,9 +54,10 @@ public class PegBehaviour : MonoBehaviour
 
 	private void CheckCollision()
 	{
-		if (isMouseDrug && !isCanPlace || mousePointer.isMouseInStartZone && isMouseDrug && isCanPlace)
-		{
-			Physics2D.IgnoreCollision(bottomOuterZone, this.gameObject.GetComponent<CircleCollider2D>());
+		//if (isMouseDrug && !isCanPlace || mousePointer.isMouseInStartZone && isMouseDrug && isCanPlace)
+		if (isMouseDrug && !isCanPlace)
+        {
+            Physics2D.IgnoreCollision(bottomOuterZone, this.gameObject.GetComponent<CircleCollider2D>());
 			Physics2D.IgnoreCollision(bottomOuterZone, outerBall);
 		}
 		else
@@ -121,6 +132,13 @@ public class PegBehaviour : MonoBehaviour
 	private void OnMouseUp()
 	{
 		isMouseDrug = false;
+
+		if (!isCanPlace)
+		{
+			Debug.Log("Peg Position is " + gameObject.transform.position);
+			transform.position = initialPegPositionVec2;
+            pegImage.enabled = false;
+        }
 	}
 
 

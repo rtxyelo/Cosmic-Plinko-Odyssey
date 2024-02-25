@@ -20,14 +20,15 @@ public class BallBehaviour : MonoBehaviour
 	private bool isGameBeenPaused = false;
 	private Vector3 initialPosition;
 	private bool isHealthBonusCollect = false;
-
+	private PegsArrangementBehaviour pegsArrangementBehaviour;
     void Start()
     {
 		initialPosition = transform.position;
 
 		scoreBehaviour = FindObjectOfType<ScoreBehaviour>();
+        pegsArrangementBehaviour = FindObjectOfType<PegsArrangementBehaviour>();
 
-		rigidBody = GetComponent<Rigidbody2D>();
+        rigidBody = GetComponent<Rigidbody2D>();
 		ballMaterial = rigidBody.sharedMaterial;
 
 		ballMaterial.bounciness = bounciness;
@@ -92,47 +93,6 @@ public class BallBehaviour : MonoBehaviour
 				touchCount++;
 			}
 
-			if (collision.gameObject.CompareTag("PointsBonus"))
-			{
-				scoreBehaviour.PointsBonusCollect();
-
-                PegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
-                collision.gameObject.SetActive(false);
-
-				//Destroy(collision.gameObject);
-            }
-
-            if (collision.gameObject.CompareTag("SpeedBonus"))
-            {
-				rigidBody.velocity = new Vector2(rigidBody.velocity.x + 0.001f, rigidBody.velocity.y + 0.001f);
-				rigidBody.velocity *= 3;
-
-				PegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
-                collision.gameObject.SetActive(false);
-
-                //Destroy(collision.gameObject);
-            }
-
-            if (collision.gameObject.CompareTag("ReboundBonus"))
-            {
-                reboundWall.SetActive(true);
-
-				PegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
-                collision.gameObject.SetActive(false);
-
-                //Destroy(collision.gameObject);
-            }
-
-            if (collision.gameObject.CompareTag("HealthBonus"))
-            {
-				isHealthBonusCollect = true;
-
-                PegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
-                collision.gameObject.SetActive(false);
-
-                //Destroy(collision.gameObject);
-            }
-
             if (collision.gameObject.CompareTag("ReboundWall"))
             {
                 reboundWall.SetActive(false);
@@ -140,7 +100,55 @@ public class BallBehaviour : MonoBehaviour
         }
 	}
 
-	public void FinishGame()
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // PointsBonus collect
+        if (collision.gameObject.CompareTag("PointsBonus"))
+        {
+            scoreBehaviour.PointsBonusCollect();
+
+            PegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
+            collision.gameObject.SetActive(false);
+
+			Debug.Log("Points bonus collect");
+        }
+
+        // SpeedBonus collect
+        if (collision.gameObject.CompareTag("SpeedBonus"))
+        {
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x + 0.001f, rigidBody.velocity.y + 0.001f);
+            rigidBody.velocity *= 3;
+
+            PegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
+            collision.gameObject.SetActive(false);
+
+            Debug.Log("Speed bonus collect");
+        }
+
+        // ReboundBonus collect
+        if (collision.gameObject.CompareTag("ReboundBonus"))
+        {
+            reboundWall.SetActive(true);
+
+            PegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
+            collision.gameObject.SetActive(false);
+
+            Debug.Log("Rebound bonus collect");
+        }
+
+        // HealthBonus collect
+        if (collision.gameObject.CompareTag("HealthBonus"))
+        {
+            isHealthBonusCollect = true;
+
+            PegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
+            collision.gameObject.SetActive(false);
+
+            Debug.Log("Health bonus collect");
+        }
+    }
+
+    public void FinishGame()
 	{
 		rigidBody.isKinematic = true;
 		gameObject.SetActive(false);
@@ -149,7 +157,8 @@ public class BallBehaviour : MonoBehaviour
 	public void StartGame()
 	{
 		isStart = true;
-	}
+        pegsArrangementBehaviour.isRemoveJumpPegMaterial = false;
+    }
 
 	public void StartGameFlagOff()
 	{

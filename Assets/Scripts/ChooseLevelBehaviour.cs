@@ -2,16 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ChooseLevelBehaviour : MonoBehaviour
 {
     [SerializeField] private AudioSource asseptSound;
     [SerializeField] private AudioSource declineSound;
     [SerializeField] private List<Image> listOfButtonImages = new List<Image>();
+    [SerializeField] private List<TMP_Text> listOfButtonText = new List<TMP_Text>();
 
     [SerializeField] private Sprite selectLvlSprite;
     [SerializeField] private Sprite closedLvlSprite;
     [SerializeField] private Sprite openedLvlSprite;
+
+    [SerializeField] private Color selectLvlColor;
+    [SerializeField] private Color closedLvlColor;
+    [SerializeField] private Color openedLvlColor;
 
     private string maxLevelKey = "MaxLevel";
     private string currentLevelKey = "CurrentLevel";
@@ -28,11 +34,27 @@ public class ChooseLevelBehaviour : MonoBehaviour
         {
 			if (btnInd > PlayerPrefs.GetInt(maxLevelKey, 1000))
 				buttonImg.sprite = closedLvlSprite;
+
 			else if (btnInd != PlayerPrefs.GetInt(currentLevelKey, 0))
 				buttonImg.sprite = openedLvlSprite;
+
 			else
 				buttonImg.sprite = selectLvlSprite;
 			btnInd++;
+        }
+
+        btnInd = 1;
+        foreach (var text in listOfButtonText)
+        {
+            if (btnInd > PlayerPrefs.GetInt(maxLevelKey, 1000))
+                text.color = closedLvlColor;
+
+            else if (btnInd != PlayerPrefs.GetInt(currentLevelKey, 0))
+                text.color = openedLvlColor;
+
+            else
+                text.color = selectLvlColor;
+            btnInd++;
         }
     }
 
@@ -66,10 +88,26 @@ public class ChooseLevelBehaviour : MonoBehaviour
             {
                 if (btnInd > PlayerPrefs.GetInt(maxLevelKey, 1000))
                     buttonImg.sprite = closedLvlSprite;
+
                 else if(btnInd != lvl)
                     buttonImg.sprite = openedLvlSprite;
+
                 else 
                     buttonImg.sprite = selectLvlSprite;
+                btnInd++;
+            }
+
+            btnInd = 1;
+            foreach (var text in listOfButtonText)
+            {
+                if (btnInd > PlayerPrefs.GetInt(maxLevelKey, 1000))
+                    text.color = closedLvlColor;
+
+                else if (btnInd != PlayerPrefs.GetInt(currentLevelKey, 0))
+                    text.color = openedLvlColor;
+
+                else
+                    text.color = selectLvlColor;
                 btnInd++;
             }
 
