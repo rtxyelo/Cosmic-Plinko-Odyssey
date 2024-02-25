@@ -27,8 +27,9 @@ public class JumpPegBehaviour : PegBehaviour
 
         if (!isCanPlace)
         {
-            Debug.Log("Peg Position is " + gameObject.transform.position);
-            transform.position = jumpPegPosition.position;
+			// todo: redo this if i cant make respawn system
+			//Debug.Log("Peg Position is " + gameObject.transform.position);
+            //transform.position = jumpPegPosition.position;
             pegImage.enabled = false;
         }
     }
@@ -37,10 +38,19 @@ public class JumpPegBehaviour : PegBehaviour
     {
         base.Update();
 		PhysicMaterialChangeController();
-
+        RespawnUnusedPegs();
 	}
 
-    void PhysicMaterialChangeController()
+	protected override void RespawnUnusedPegs()
+	{
+		if (!isMouseDrug && isPegClicked && !isCanPlace)
+		{
+			pegsArrangement.jumpPegsCount++;
+            Destroy(gameObject);
+		}
+	}
+
+	void PhysicMaterialChangeController()
     {
         if(!isMaterialChanged && ballScript.isStart)
         {
@@ -67,13 +77,13 @@ public class JumpPegBehaviour : PegBehaviour
 
     protected override void OnTriggerExit2D(Collider2D collision)
     {
-        base.OnTriggerExit2D(collision);
-        if (collision != null)
+		if (collision != null)
         {
-            if (collision.CompareTag("OuterZone"))
+            if (collision.CompareTag("OuterZone") && !isPegBeenPlaced)
             {
 				pegsArrangementBehaviour.PegIsPlaced(2);
 			}
         }
-    }
+        base.OnTriggerExit2D(collision);
+	}
 }

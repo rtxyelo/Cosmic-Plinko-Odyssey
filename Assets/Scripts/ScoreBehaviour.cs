@@ -8,7 +8,7 @@ public class ScoreBehaviour : MonoBehaviour
     public static int playerScore;
     [SerializeField] private int scoreScaler = 10;
     [SerializeField] public int pointsBonusQuantity = 100;
-    public static int pointsBonusesCollectCount = 0;
+    public static int pointsBonusesCollectCount;
 
     private GameObject ball;
     private BallBehaviour ballScript;
@@ -22,6 +22,7 @@ public class ScoreBehaviour : MonoBehaviour
 		ball = GameObject.FindGameObjectWithTag("Ball");
 		ballScript = ball.GetComponent<BallBehaviour>();
 
+        pointsBonusesCollectCount = 0;
 		playerScore = 0;
 	}
 

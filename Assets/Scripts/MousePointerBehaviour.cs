@@ -41,7 +41,7 @@ public class MousePointerBehaviour : MonoBehaviour
 
 		cursor = Camera.main.ScreenToWorldPoint(cursor);
 
-		cursor.z = 1;
+		cursor.z = 100;
 
         return cursor;
 	}

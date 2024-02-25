@@ -17,35 +17,45 @@ public class CommonPegBehaviour : PegBehaviour
     protected override void Update()
 	{
 		base.Update();
-
+        RespawnUnusedPegs();
 	}
 
-    protected override void OnMouseUp()
+	protected override void RespawnUnusedPegs()
+	{
+		if (!isMouseDrug && isPegClicked && !isCanPlace)
+		{
+			pegsArrangement.commonPegsCount++;
+            Destroy(gameObject);
+		}
+	}
+
+	protected override void OnMouseUp()
     {
         base.OnMouseUp();
 
         if (!isCanPlace)
         {
-            Debug.Log("Peg Position is " + gameObject.transform.position);
-            transform.position = commonPegPosition.position;
+            // todo: redo this if i cant make respawn system
+            //Debug.Log("Peg Position is " + gameObject.transform.position);
+            //transform.position = commonPegPosition.position;
             pegImage.enabled = false;
         }
     }
 
-    protected override void OnTriggerStay2D(Collider2D collision)
+	protected override void OnTriggerStay2D(Collider2D collision)
     {
         base.OnTriggerStay2D(collision);
     }
 
     protected override void OnTriggerExit2D(Collider2D collision)
     {
-        base.OnTriggerExit2D(collision);
-        if (collision != null)
+		if (collision != null)
         {
-            if (collision.CompareTag("OuterZone"))
+            if (collision.CompareTag("OuterZone") && !isPegBeenPlaced)
             {
                 pegsArrangementBehaviour.PegIsPlaced(1);
             }
         }
-    }
+		base.OnTriggerExit2D(collision);
+	}
 }

@@ -5,7 +5,6 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class PegsArrangementBehaviour : MonoBehaviour
 {
     private string currentLevelKey = "CurrentLevel";
@@ -13,10 +12,10 @@ public class PegsArrangementBehaviour : MonoBehaviour
 
     [SerializeField] private RectTransform commonPegPosition;
     [SerializeField] private RectTransform jumpPegPosition;
-    //private Transform speedPegPosition;
+	//private Transform speedPegPosition;
 
-    private int commonPegsCount;
-    private int jumpPegsCount;
+	[HideInInspector] public int commonPegsCount;
+	[HideInInspector] public int jumpPegsCount;
 
     [SerializeField] private GameObject commonPegPrefab;
     [SerializeField] private GameObject jumpPegPrefab;
@@ -73,7 +72,11 @@ public class PegsArrangementBehaviour : MonoBehaviour
             DisplayPegsCount();
         }
 
-        if (ballBehaviour.isStart && isBonusesTriggersOn)
+        ClearPegsList(ref commonPegsInstances);
+        ClearPegsList(ref jumpPegsInstances);
+
+
+		if (ballBehaviour.isStart && isBonusesTriggersOn)
         {
             Debug.Log("BonusesColliderTrigger ON");
             isBonusesTriggersOn = false;
@@ -186,6 +189,11 @@ public class PegsArrangementBehaviour : MonoBehaviour
             }
         }
         return count;
+    }
+
+    private void ClearPegsList(ref List<PegBehaviour> pegs)
+    {
+        pegs = pegs.Where(x => x != null).ToList();
     }
 
     private void CalculatePegsCountByLvl(int currentLvl)

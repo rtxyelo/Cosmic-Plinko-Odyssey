@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 public class PegBehaviour : MonoBehaviour
 {
-	[HideInInspector] public bool isMouseDrug = false;
-	[HideInInspector] public bool isCanPlace = false;
-	[HideInInspector] public bool isPegClicked = false;
-	[HideInInspector] public bool isPegBeenPlaced = false;
+	/*[HideInInspector]*/ public bool isMouseDrug = false;
+	/*[HideInInspector]*/ public bool isCanPlace = false;
+	/*[HideInInspector]*/ public bool isPegClicked = false;
+	/*[HideInInspector]*/ public bool isPegBeenPlaced = false;
 
 	private BoxCollider2D bottomOuterZone;
 	private CircleCollider2D outerBall;
@@ -17,6 +17,7 @@ public class PegBehaviour : MonoBehaviour
 	protected Image pegImage;
 	protected GameObject ball;
 	protected BallBehaviour ballScript;
+	protected PegsArrangementBehaviour pegsArrangement;
 	protected Rigidbody2D rigidBody;
 
     protected virtual void Start()
@@ -31,7 +32,8 @@ public class PegBehaviour : MonoBehaviour
 		bottomOuterZone = GameObject.Find("BottomWall").GetComponent<BoxCollider2D>();
 		outerBall = transform.GetChild(0).GetComponent<CircleCollider2D>();
 
-		mousePointer = FindAnyObjectByType<MousePointerBehaviour>();
+		mousePointer = FindObjectOfType<MousePointerBehaviour>();
+		pegsArrangement = FindObjectOfType<PegsArrangementBehaviour>();
 	}
 
 	// Update is called once per frame
@@ -45,8 +47,8 @@ public class PegBehaviour : MonoBehaviour
 
 	private void CheckCollision()
 	{
-		//if (isMouseDrug && !isCanPlace || mousePointer.isMouseInStartZone && isMouseDrug && isCanPlace)
-		if (isMouseDrug && !isCanPlace)
+		if (isMouseDrug && !isCanPlace || mousePointer.isMouseInStartZone && isMouseDrug && isCanPlace)
+		//if (isMouseDrug && !isCanPlace)
         {
             Physics2D.IgnoreCollision(bottomOuterZone, this.gameObject.GetComponent<CircleCollider2D>());
 			Physics2D.IgnoreCollision(bottomOuterZone, outerBall);
@@ -83,11 +85,16 @@ public class PegBehaviour : MonoBehaviour
 			rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
 		}
 
+
+		if(isCanPlace && isMouseDrug || isMouseDrug && isPegBeenPlaced)
+		{
+			DropDownBehaviour.isShowDropDown = true;
+		}
 	}
 
-	private void RespawnUnusedPegs()
+	protected virtual void RespawnUnusedPegs()
 	{
-		if (!isMouseDrug && !isCanPlace && isPegBeenPlaced)
+		if (!isMouseDrug && isPegClicked && !isCanPlace)
 		{
 			Destroy(gameObject);
 		}
@@ -145,7 +152,7 @@ public class PegBehaviour : MonoBehaviour
 			{
 				isCanPlace = true;
 
-				if (!isPegBeenPlaced)
+				if (!isPegBeenPlaced && !GameBehaviour.isGameStart)
 				{
 					Debug.Log("isPegBeenPlaced " + isPegBeenPlaced);
 					isPegBeenPlaced = true;
