@@ -15,7 +15,7 @@ public class BallBehaviour : MonoBehaviour
     private PhysicsMaterial2D ballMaterial;
     private ScoreBehaviour scoreBehaviour;
 
-    private Vector2 ballSpeed = Vector2.zero;
+	private Vector2 ballSpeed = Vector2.zero;
 	private float ballGravity = 0;
 	private bool isGameBeenPaused = false;
 	private Vector3 initialPosition;
@@ -27,7 +27,7 @@ public class BallBehaviour : MonoBehaviour
 
 		scoreBehaviour = FindObjectOfType<ScoreBehaviour>();
 
-        rigidBody = GetComponent<Rigidbody2D>();
+		rigidBody = GetComponent<Rigidbody2D>();
 		ballMaterial = rigidBody.sharedMaterial;
 
 		ballMaterial.bounciness = bounciness;

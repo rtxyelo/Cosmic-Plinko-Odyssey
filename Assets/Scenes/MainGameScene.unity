@@ -763,6 +763,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2123338231}
+        m_TargetAssemblyTypeName: BallBehaviour, Assembly-CSharp
+        m_MethodName: StartGameFlagOff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2057138378}
         m_TargetAssemblyTypeName: PegsArrangementBehaviour, Assembly-CSharp
         m_MethodName: LoseRestartGame
@@ -810,18 +822,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 2123338231}
-        m_TargetAssemblyTypeName: BallBehaviour, Assembly-CSharp
-        m_MethodName: StartGameFlagOff
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &64071841
 MonoBehaviour:
@@ -6682,8 +6682,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 201925624}
         m_TargetAssemblyTypeName: SceneBehaviour, Assembly-CSharp
-        m_MethodName: LoadSceneByIndex
-        m_Mode: 3
+        m_MethodName: ResetGameScene
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6827,13 +6827,13 @@ RectTransform:
   - {fileID: 1832394411}
   - {fileID: 1741538372}
   - {fileID: 1095431076}
-  - {fileID: 1168964692}
+  - {fileID: 1584524498}
+  - {fileID: 1235936845}
   - {fileID: 2123338230}
   - {fileID: 2000688888}
-  - {fileID: 1235936845}
-  - {fileID: 1584524498}
   - {fileID: 52164916}
   - {fileID: 1253883051}
+  - {fileID: 1168964692}
   - {fileID: 323454109}
   - {fileID: 437144619}
   - {fileID: 1882728301}
@@ -8855,7 +8855,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1359416391
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8885,7 +8885,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -12272,7 +12272,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2035038210
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// Handles scene-related behaviors such as restarting scenes, loading specific scenes, and quitting the application.
@@ -40,6 +41,20 @@ public class SceneBehaviour : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void ResetGameScene()
+    {
+        GameBehaviour.isGameStart = false;
+        GameBehaviour.isGamePaused = false;
+        RestartScene();
+	}
+
+    public void LoadGameScene(string sceneName)
+    {
+		GameBehaviour.isGameStart = false;
+		GameBehaviour.isGamePaused = false;
+        LoadSceneByName(sceneName);
+	}
 
     private void Update()
     {

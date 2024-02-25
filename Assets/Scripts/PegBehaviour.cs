@@ -39,7 +39,7 @@ public class PegBehaviour : MonoBehaviour
 		PegMoveController();
 		CheckCollision();
 		HideUnusedPegs();
-		RespawnUnusedPegs();
+		//RespawnUnusedPegs();
 	}
 
 	private void CheckCollision()
@@ -96,10 +96,13 @@ public class PegBehaviour : MonoBehaviour
 		if (GameBehaviour.isGameStart && !isCanPlace)
 		{
 			gameObject.SetActive(false);
-			//Destroy(gameObject);
 		}
 	}
 
+	private void OnDestroy()
+	{
+		Debug.Log("Destroy peg");
+	}
 
 	private void OnMouseDown()
 	{
@@ -142,6 +145,7 @@ public class PegBehaviour : MonoBehaviour
 
 				if (!isPegBeenPlaced)
 				{
+					Debug.Log("isPegBeenPlaced " + isPegBeenPlaced);
 					isPegBeenPlaced = true;
 				}
 			}

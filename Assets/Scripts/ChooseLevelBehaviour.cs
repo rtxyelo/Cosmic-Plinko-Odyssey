@@ -10,7 +10,8 @@ public class ChooseLevelBehaviour : MonoBehaviour
     [SerializeField] private List<Image> listOfButtonImages = new List<Image>();
 
     [SerializeField] private Sprite selectLvlSprite;
-    [SerializeField] private Sprite unselectLvlSprite;
+    [SerializeField] private Sprite closedLvlSprite;
+    [SerializeField] private Sprite openedLvlSprite;
 
     private string maxLevelKey = "MaxLevel";
     private string currentLevelKey = "CurrentLevel";
@@ -25,11 +26,13 @@ public class ChooseLevelBehaviour : MonoBehaviour
         int btnInd = 1;
         foreach (Image buttonImg in listOfButtonImages)
         {
-            if (btnInd != PlayerPrefs.GetInt(currentLevelKey, 1))
-                buttonImg.sprite = unselectLvlSprite;
-            else
-                buttonImg.sprite = selectLvlSprite;
-            btnInd++;
+			if (btnInd > PlayerPrefs.GetInt(maxLevelKey, 1000))
+				buttonImg.sprite = closedLvlSprite;
+			else if (btnInd != PlayerPrefs.GetInt(currentLevelKey, 0))
+				buttonImg.sprite = openedLvlSprite;
+			else
+				buttonImg.sprite = selectLvlSprite;
+			btnInd++;
         }
     }
 
@@ -61,9 +64,11 @@ public class ChooseLevelBehaviour : MonoBehaviour
             int btnInd = 1;
             foreach (Image buttonImg in listOfButtonImages)
             {
-                if (btnInd != lvl)
-                    buttonImg.sprite = unselectLvlSprite;
-                else
+                if (btnInd > PlayerPrefs.GetInt(maxLevelKey, 1000))
+                    buttonImg.sprite = closedLvlSprite;
+                else if(btnInd != lvl)
+                    buttonImg.sprite = openedLvlSprite;
+                else 
                     buttonImg.sprite = selectLvlSprite;
                 btnInd++;
             }

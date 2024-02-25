@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PegsArrangementBehaviour : MonoBehaviour
 {
@@ -197,14 +198,18 @@ public class PegsArrangementBehaviour : MonoBehaviour
         foreach (var commonPeg in commonPegsInstances)
         {
             if (!commonPeg.gameObject.activeSelf)
-                commonPeg.gameObject.SetActive(true);
-        }
+            {
+				commonPeg.gameObject.SetActive(true);
+			}
+		}
 
         foreach (var jumpPeg in jumpPegsInstances)
         {
             if (!jumpPeg.gameObject.activeSelf)
-                jumpPeg.gameObject.SetActive(true);
-        }
+            {
+				jumpPeg.gameObject.SetActive(true);
+			}
+		}
 
         foreach (var bonus in listOfCollectBonuses)
         {
