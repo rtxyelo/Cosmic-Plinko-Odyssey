@@ -10,32 +10,23 @@ public class PegBehaviour : MonoBehaviour
 	[HideInInspector] public bool isPegClicked = false;
 	[HideInInspector] public bool isPegBeenPlaced = false;
 
-	private Image pegImage;
 	private BoxCollider2D bottomOuterZone;
 	private CircleCollider2D outerBall;
 	private MousePointerBehaviour mousePointer;
 
+	protected Image pegImage;
 	protected GameObject ball;
 	protected BallBehaviour ballScript;
 	protected Rigidbody2D rigidBody;
-	protected Vector2 initialPegPositionVec2;
-    protected RectTransform pegRectTransform;
-
-    [SerializeField] protected RectTransform commonPegPosition;
-    [SerializeField] protected RectTransform jumpPegPosition;
-
-
 
     protected virtual void Start()
 	{
-        pegRectTransform = GetComponent<RectTransform>();
-		initialPegPositionVec2 = new Vector2(pegRectTransform.transform.position.x, pegRectTransform.transform.position.y);
-
         rigidBody = GetComponent<Rigidbody2D>();
 		pegImage = GetComponent<Image>();
 
 		ball = GameObject.FindGameObjectWithTag("Ball");
-		ballScript = ball.GetComponent<BallBehaviour>();
+		if (ball != null)
+			ballScript = ball.GetComponent<BallBehaviour>();
 
 		bottomOuterZone = GameObject.Find("BottomWall").GetComponent<BoxCollider2D>();
 		outerBall = transform.GetChild(0).GetComponent<CircleCollider2D>();
@@ -129,16 +120,9 @@ public class PegBehaviour : MonoBehaviour
 		}
 	}
 
-	private void OnMouseUp()
+	protected virtual void OnMouseUp()
 	{
 		isMouseDrug = false;
-
-		if (!isCanPlace)
-		{
-			Debug.Log("Peg Position is " + gameObject.transform.position);
-			transform.position = initialPegPositionVec2;
-            pegImage.enabled = false;
-        }
 	}
 
 

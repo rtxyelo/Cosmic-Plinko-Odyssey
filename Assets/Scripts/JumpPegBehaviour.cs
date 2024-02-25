@@ -12,12 +12,26 @@ public class JumpPegBehaviour : PegBehaviour
 
 	private PegsArrangementBehaviour pegsArrangementBehaviour;
     private bool isMaterialChanged = false;
+    protected Transform jumpPegPosition;
 
     protected override void Start()
     {
         base.Start();
 		pegsArrangementBehaviour = GameObject.Find("PegsArrangementBehaviour").GetComponent<PegsArrangementBehaviour>();
-	}
+        jumpPegPosition = GameObject.FindGameObjectWithTag("JumpPegPosition").GetComponent<Transform>();
+    }
+
+    protected override void OnMouseUp()
+    {
+        base.OnMouseUp();
+
+        if (!isCanPlace)
+        {
+            Debug.Log("Peg Position is " + gameObject.transform.position);
+            transform.position = jumpPegPosition.position;
+            pegImage.enabled = false;
+        }
+    }
 
     protected override void Update()
     {

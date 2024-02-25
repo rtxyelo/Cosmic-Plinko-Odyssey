@@ -5,18 +5,32 @@ using UnityEngine;
 public class CommonPegBehaviour : PegBehaviour
 {
 	private PegsArrangementBehaviour pegsArrangementBehaviour;
+	protected Transform commonPegPosition;
 
     protected override void Start()
     {
 		base.Start();
 		pegsArrangementBehaviour = GameObject.Find("PegsArrangementBehaviour").GetComponent<PegsArrangementBehaviour>();
+        commonPegPosition = GameObject.FindGameObjectWithTag("CommonPegPosition").GetComponent<Transform>();
     }
 
-	protected override void Update()
+    protected override void Update()
 	{
 		base.Update();
 
 	}
+
+    protected override void OnMouseUp()
+    {
+        base.OnMouseUp();
+
+        if (!isCanPlace)
+        {
+            Debug.Log("Peg Position is " + gameObject.transform.position);
+            transform.position = commonPegPosition.position;
+            pegImage.enabled = false;
+        }
+    }
 
     protected override void OnTriggerStay2D(Collider2D collision)
     {
