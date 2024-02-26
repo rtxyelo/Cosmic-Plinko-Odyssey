@@ -11,9 +11,12 @@ public class PegBehaviour : MonoBehaviour
 	/*[HideInInspector]*/ public bool isPegBeenPlaced = false;
 
 	private BoxCollider2D bottomOuterZone;
+	private GameObject outerBallGameObject;
 	private CircleCollider2D outerBall;
 	private CircleCollider2D pegCollider;
 	private MousePointerBehaviour mousePointer;
+	private int gameobjectLayer;
+	private int outerBallLayer;
 
 	protected Image pegImage;
 	protected GameObject ball;
@@ -27,12 +30,16 @@ public class PegBehaviour : MonoBehaviour
 		pegImage = GetComponent<Image>();
 		pegCollider = GetComponent<CircleCollider2D>();
 
+		gameobjectLayer = LayerMask.NameToLayer("UI");
+		outerBallLayer = LayerMask.NameToLayer("OuterZone");
+
 		ball = GameObject.FindGameObjectWithTag("Ball");
 		if (ball != null)
 			ballScript = ball.GetComponent<BallBehaviour>();
 
 		bottomOuterZone = GameObject.Find("BottomWall").GetComponent<BoxCollider2D>();
-		outerBall = transform.GetChild(0).GetComponent<CircleCollider2D>();
+		outerBallGameObject = transform.GetChild(0).gameObject;
+		outerBall = outerBallGameObject.GetComponent<CircleCollider2D>();
 
 		mousePointer = FindObjectOfType<MousePointerBehaviour>();
 		pegsArrangement = FindObjectOfType<PegsArrangementBehaviour>();
@@ -44,8 +51,9 @@ public class PegBehaviour : MonoBehaviour
 		PegMoveController();
 		CheckCollision();
 		HideUnusedPegs();
-		//RespawnUnusedPegs();
 		TeleportPegToMouse();
+		StayedPegController();
+		LayerChanger();
 	}
 
 	private void CheckCollision()
@@ -68,6 +76,8 @@ public class PegBehaviour : MonoBehaviour
 		if (GameBehaviour.isGameStart)
 			return;
 		if (GameBehaviour.isGamePaused)
+			return;
+		if (rigidBody.bodyType == RigidbodyType2D.Static || rigidBody.bodyType == RigidbodyType2D.Kinematic)
 			return;
 
 		Vector3 cursor = Input.mousePosition;
@@ -123,6 +133,34 @@ public class PegBehaviour : MonoBehaviour
 		}
 	}
 
+	private void StayedPegController()
+	{
+		if(isMouseDrug && !outerBallGameObject.activeSelf)
+		{
+			outerBallGameObject.SetActive(true);
+			rigidBody.bodyType = RigidbodyType2D.Dynamic;
+		}
+		else if (!isPegClicked)
+		{
+			outerBallGameObject.SetActive(false);
+			rigidBody.bodyType = RigidbodyType2D.Kinematic;
+		}
+		else if(!isMouseDrug && outerBallGameObject.activeSelf)
+		{
+			outerBallGameObject.SetActive(false);
+			rigidBody.bodyType = RigidbodyType2D.Static;
+		}
+	}
+
+	private void LayerChanger()
+	{
+		if (isPegClicked && gameObject.layer != gameobjectLayer)
+		{
+			gameObject.layer = gameobjectLayer;
+			outerBallGameObject.layer = outerBallLayer;
+		}
+	}
+
 	private void OnDestroy()
 	{
 		Debug.Log("Destroy peg");
@@ -169,7 +207,7 @@ public class PegBehaviour : MonoBehaviour
 
 				if (!isPegBeenPlaced && !GameBehaviour.isGameStart)
 				{
-					Debug.Log("isPegBeenPlaced " + isPegBeenPlaced);
+					Debug.Log("OnTriggerExit");
 					isPegBeenPlaced = true;
 				}
 			}

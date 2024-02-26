@@ -27,7 +27,6 @@ public class JumpPegBehaviour : PegBehaviour
 
         if (!isCanPlace)
         {
-			// todo: redo this if i cant make respawn system
 			//Debug.Log("Peg Position is " + gameObject.transform.position);
             //transform.position = jumpPegPosition.position;
             pegImage.enabled = false;

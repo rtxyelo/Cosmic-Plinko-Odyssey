@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using UnityEngine;
 
@@ -15,68 +16,82 @@ public class PegStartColliderBehaviour : MonoBehaviour
     {
 		ClearPegsList(ref startPegs);
 		ClearPegsList(ref playingAreaPegs);
-		MoveListPegs();
-		StartPegsOffCollision();
-		PlayingAreaOnCollision();
 	}
 
-	private void StartPegsOffCollision()
+	public void MovePegToPlayingAreaList(PegBehaviour peg)
 	{
-		List<PegBehaviour> playingPegs = new List<PegBehaviour>();
-		playingPegs = playingAreaPegs.Where(x => x.isMouseDrug).ToList();
-
-		foreach (PegBehaviour playingPeg in playingPegs)
+		if (startPegs.Contains(peg))
 		{
-			foreach (PegBehaviour startPeg in startPegs)
-			{
-				Collider2D colliderStartPeg = startPeg.GetComponent<CircleCollider2D>();
-				Collider2D ballStartPeg = startPeg.transform.GetChild(0).GetComponent<CircleCollider2D>();
-
-				Collider2D colliderPlayingPeg = playingPeg.GetComponent<CircleCollider2D>();
-				Collider2D ballPlayingPeg = playingPeg.transform.GetChild(0).GetComponent<CircleCollider2D>();
-
-				Physics2D.IgnoreCollision(colliderStartPeg, colliderPlayingPeg);
-				Physics2D.IgnoreCollision(colliderStartPeg, ballPlayingPeg);
-				Physics2D.IgnoreCollision(ballStartPeg, colliderPlayingPeg);
-				Physics2D.IgnoreCollision(ballStartPeg, ballPlayingPeg);
-
-			}
+			startPegs.Remove(peg);
+			playingAreaPegs.Add(peg);
+			OnStartPlayingCollision(peg);
 		}
 	}
 
-	private void PlayingAreaOnCollision()
+	public void AddStartPeg(PegBehaviour peg)
 	{
-		foreach (PegBehaviour playingPeg in playingAreaPegs)
+		startPegs.Add(peg);
+		OffStartStartCollision(peg);
+		OffStartPlayingCollision(peg);
+	}
+
+	private void OffStartStartCollision(PegBehaviour peg)
+	{
+		foreach (var sPeg in startPegs.Where(x => x != peg))
 		{
-			List<PegBehaviour> playingPegs = new List<PegBehaviour>();
-			playingPegs = playingAreaPegs.Where(x => x != playingPeg).ToList();
+			Collider2D colliderStartPeg = peg.GetComponent<CircleCollider2D>();
+			Collider2D ballStartPeg = peg.transform.GetChild(0).GetComponent<CircleCollider2D>();
 
-			foreach(PegBehaviour peg in playingPegs)
-			{
-				Collider2D colliderStartPeg = peg.GetComponent<CircleCollider2D>();
-				Collider2D ballStartPeg = peg.transform.GetChild(0).GetComponent<CircleCollider2D>();
+			Collider2D colliderPlayingPeg = sPeg.GetComponent<CircleCollider2D>();
+			Collider2D ballPlayingPeg = sPeg.transform.GetChild(0).GetComponent<CircleCollider2D>();
 
-				Collider2D colliderPlayingPeg = playingPeg.GetComponent<CircleCollider2D>();
-				Collider2D ballPlayingPeg = playingPeg.transform.GetChild(0).GetComponent<CircleCollider2D>();
-
-				Physics2D.IgnoreCollision(colliderStartPeg, colliderPlayingPeg, false);
-				Physics2D.IgnoreCollision(colliderStartPeg, ballPlayingPeg, false);
-				Physics2D.IgnoreCollision(ballStartPeg, colliderPlayingPeg, false);
-				Physics2D.IgnoreCollision(ballStartPeg, ballPlayingPeg, false);
-			}
+			Physics2D.IgnoreCollision(colliderStartPeg, colliderPlayingPeg);
+			Physics2D.IgnoreCollision(colliderStartPeg, ballPlayingPeg);
+			Physics2D.IgnoreCollision(ballStartPeg, colliderPlayingPeg);
+			Physics2D.IgnoreCollision(ballStartPeg, ballPlayingPeg);
 		}
 	}
 
-	private void MoveListPegs()
+	private void OffStartPlayingCollision(PegBehaviour peg)
 	{
-		List<PegBehaviour> movedPegs = new List<PegBehaviour>();
-		movedPegs = startPegs.Where(x => x.isPegClicked && !playingAreaPegs.Contains(x)).ToList();
-		playingAreaPegs.AddRange(movedPegs);
-		startPegs = startPegs.Where(x => !movedPegs.Contains(x)).ToList();
+		foreach(var pPeg in playingAreaPegs)
+		{
+			Collider2D colliderStartPeg = peg.GetComponent<CircleCollider2D>();
+			Collider2D ballStartPeg = peg.transform.GetChild(0).GetComponent<CircleCollider2D>();
+
+			Collider2D colliderPlayingPeg = pPeg.GetComponent<CircleCollider2D>();
+			Collider2D ballPlayingPeg = pPeg.transform.GetChild(0).GetComponent<CircleCollider2D>();
+
+			Physics2D.IgnoreCollision(colliderStartPeg, colliderPlayingPeg);
+			Physics2D.IgnoreCollision(colliderStartPeg, ballPlayingPeg);
+			Physics2D.IgnoreCollision(ballStartPeg, colliderPlayingPeg);
+			Physics2D.IgnoreCollision(ballStartPeg, ballPlayingPeg);
+		}
 	}
 
+	private void OnStartPlayingCollision(PegBehaviour peg)
+	{
+		foreach (var pPeg in playingAreaPegs.Where(x => x != peg))
+		{
+			Collider2D colliderStartPeg = peg.GetComponent<CircleCollider2D>();
+			Collider2D ballStartPeg = peg.transform.GetChild(0).GetComponent<CircleCollider2D>();
+
+			Collider2D colliderPlayingPeg = pPeg.GetComponent<CircleCollider2D>();
+			Collider2D ballPlayingPeg = pPeg.transform.GetChild(0).GetComponent<CircleCollider2D>();
+
+			Physics2D.IgnoreCollision(colliderStartPeg, colliderPlayingPeg, false);
+			Physics2D.IgnoreCollision(colliderStartPeg, ballPlayingPeg, false);
+			Physics2D.IgnoreCollision(ballStartPeg, colliderPlayingPeg, false);
+			Physics2D.IgnoreCollision(ballStartPeg, ballPlayingPeg, false);
+		}
+	}
+
+	// todo: call function in PegBehaviour script when peg destroys
 	private void ClearPegsList(ref List<PegBehaviour> pegs)
 	{
-		pegs = pegs.Where(x => x != null).ToList();
+		if (pegs.Any(x => x == null))
+		{
+			pegs = pegs.Where(x => x != null).ToList();
+		}
 	}
 }

@@ -48,7 +48,6 @@ public class PegsArrangementBehaviour : MonoBehaviour
     List<BoxCollider2D> healthBonusesListColliders = new List<BoxCollider2D>();
 
     private GameObject pauseButton;
-	private PegStartColliderBehaviour pegStartCollider;
 
 	[HideInInspector] public static List<GameObject> listOfCollectBonuses = new List<GameObject>();
 
@@ -62,7 +61,6 @@ public class PegsArrangementBehaviour : MonoBehaviour
         CalculatePegsCountByLvl(currentLevelValue);
         FillListsOfBonusesColliders();
         pauseButton = GameObject.Find("PauseButton");
-		pegStartCollider = FindObjectOfType<PegStartColliderBehaviour>();
 	}
 
     private void Update()
@@ -157,8 +155,8 @@ public class PegsArrangementBehaviour : MonoBehaviour
             commonPegIsPlaced = false;
             var go = Instantiate(commonPegPrefab, commonPegPosition);
             go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, 0);
-            commonPegsInstances.Add(go.GetComponent<PegBehaviour>());
-            pegStartCollider.startPegs.Add(go.GetComponent<PegBehaviour>());
+            var peg = go.GetComponent<PegBehaviour>();
+			commonPegsInstances.Add(peg);
 			commonPegsCount--;
         }
     }
@@ -170,8 +168,8 @@ public class PegsArrangementBehaviour : MonoBehaviour
             jumpPegIsPlaced = false;
             var go = Instantiate(jumpPegPrefab, jumpPegPosition);
             go.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, 0);
-            jumpPegsInstances.Add(go.GetComponent<PegBehaviour>());
-			pegStartCollider.startPegs.Add(go.GetComponent<PegBehaviour>());
+			var peg = go.GetComponent<PegBehaviour>();
+			jumpPegsInstances.Add(peg);
 			jumpPegsCount--;
         }
     }
@@ -197,7 +195,10 @@ public class PegsArrangementBehaviour : MonoBehaviour
 
     private void ClearPegsList(ref List<PegBehaviour> pegs)
     {
-        pegs = pegs.Where(x => x != null).ToList();
+		if (pegs.Any(x => x == null))
+		{
+			pegs = pegs.Where(x => x != null).ToList();
+		}
     }
 
     private void CalculatePegsCountByLvl(int currentLvl)

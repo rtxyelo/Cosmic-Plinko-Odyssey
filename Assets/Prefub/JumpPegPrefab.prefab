@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8724007683111767442}
   - component: {fileID: 5691319315191456024}
-  m_Layer: 3
+  m_Layer: 9
   m_Name: Circle
   m_TagString: OuterZone
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 2882643894099973674}
   - component: {fileID: 7221344934017359196}
   - component: {fileID: 4850486158383653053}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: JumpPegPrefab
   m_TagString: Peg
   m_Icon: {fileID: 0}
@@ -224,4 +224,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b2951b27781f1f429b835b2350f1cca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMouseDrug: 0
+  isCanPlace: 0
+  isPegClicked: 0
+  isPegBeenPlaced: 0
   physicsMaterial: {fileID: 6200000, guid: 881e9d009c8447f45b6fd98f27997db7, type: 2}
