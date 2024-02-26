@@ -9,7 +9,7 @@ public class PlayButtonTouchBehaviour : MonoBehaviour
 
     public void PlayButtonTouch()
     {
-        menuPanel.SetActive(false);
         levelsPanel.SetActive(true);
-    }
+        menuPanel.SetActive(false);
+	}
 }
