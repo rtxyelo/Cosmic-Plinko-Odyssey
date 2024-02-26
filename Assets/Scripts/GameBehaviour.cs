@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class GameBehaviour : MonoBehaviour
 {
-    public static int[] winScore = { 40, 100, 200, 300, 500, 1000, 2000, 3000, 5000, 10000 };
+    public static int[] winScore = { 40, 100, 150, 170, 200, 1000, 2000, 3000, 5000, 10000 };
 
     [HideInInspector]
     public static bool isGameStart = false;

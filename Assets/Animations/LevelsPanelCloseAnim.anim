@@ -1202,8 +1202,8 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 2
-    functionName: LoadSceneByIndex
-    data: 
+    functionName: LoadGameScene
+    data: MainGameScene
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 1

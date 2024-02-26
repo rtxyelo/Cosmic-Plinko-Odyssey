@@ -88,8 +88,6 @@ public class PegsArrangementBehaviour : MonoBehaviour
             isBonusesTriggersOff = false;
             BonusesColliderTrigger(false);
         }
-        //Debug.Log("isBonusesTriggersOff " + isBonusesTriggersOff);
-        //Debug.Log("isBonusesTriggersOn " + isBonusesTriggersOn);
     }
 
     private void FillListsOfBonusesColliders()
@@ -121,31 +119,6 @@ public class PegsArrangementBehaviour : MonoBehaviour
             var collider = health.GetComponent<BoxCollider2D>();
             healthBonusesListColliders.Add(collider);
         }
-
-
-        //foreach (var point in pointsBonusesList)
-        //{
-        //    var collider = point.GetComponentsInChildren<BoxCollider2D>();
-        //    pointsBonusesListColliders.AddRange(collider);
-        //}
-
-        //foreach (var speed in speedBonusesList)
-        //{
-        //    var collider = speed.GetComponentsInChildren<BoxCollider2D>();
-        //    speedBonusesListColliders.AddRange(collider);
-        //}
-
-        //foreach (var rebound in reboundBonusesList)
-        //{
-        //    var collider = rebound.GetComponentsInChildren<BoxCollider2D>();
-        //    reboundBonusesListColliders.AddRange(collider);
-        //}
-
-        //foreach (var health in healthBonusesList)
-        //{
-        //    var collider = health.GetComponentsInChildren<BoxCollider2D>();
-        //    healthBonusesListColliders.AddRange(collider);
-        //}
     }
 
     private void PlaceCommonPeg()
@@ -207,23 +180,23 @@ public class PegsArrangementBehaviour : MonoBehaviour
         {
             case 1:
                 {
-                    commonPegsCount = 5;
+                    commonPegsCount = 2;
                     jumpPegsCount = 0;
                     pointsBonusesList[0].SetActive(true);
                     break;
                 }
             case 2:
                 {
-                    commonPegsCount = 7;
-                    jumpPegsCount = 1;
+                    commonPegsCount = 4;
+                    jumpPegsCount = 0;
                     pointsBonusesList[1].SetActive(true);
                     speedBonusesList[0].SetActive(true);
                     break;
                 }
             case 3:
                 {
-                    commonPegsCount = 8;
-                    jumpPegsCount = 2;
+                    commonPegsCount = 5;
+                    jumpPegsCount = 1;
                     pointsBonusesList[2].SetActive(true);
                     speedBonusesList[1].SetActive(true);
                     reboundBonusesList[0].SetActive(true);
@@ -243,39 +216,50 @@ public class PegsArrangementBehaviour : MonoBehaviour
                 {
                     commonPegsCount = 8;
                     jumpPegsCount = 3;
-                    break;
+					pointsBonusesList[4].SetActive(true);
+					speedBonusesList[3].SetActive(true);
+					reboundBonusesList[2].SetActive(true);
+					healthBonusesList[1].SetActive(true);
+					break;
                 }
             case 6:
                 {
                     commonPegsCount = 9;
                     jumpPegsCount = 3;
-                    break;
+					pointsBonusesList[5].SetActive(true);
+					speedBonusesList[4].SetActive(true);
+					reboundBonusesList[3].SetActive(true);
+					healthBonusesList[2].SetActive(true);
+					break;
                 }
             case 7:
                 {
                     commonPegsCount = 10;
                     jumpPegsCount = 2;
-                    break;
+					pointsBonusesList[6].SetActive(true);
+					speedBonusesList[5].SetActive(true);
+					reboundBonusesList[4].SetActive(true);
+					healthBonusesList[3].SetActive(true);
+					break;
                 }
             case 8:
                 {
                     commonPegsCount = 11;
                     jumpPegsCount = 3;
-                    break;
+					pointsBonusesList[7].SetActive(true);
+					speedBonusesList[6].SetActive(true);
+					reboundBonusesList[5].SetActive(true);
+					healthBonusesList[4].SetActive(true);
+					break;
                 }
-            case 9:
-                {
-                    commonPegsCount = 12;
-                    jumpPegsCount = 4;
-                    break;
-                }
-            case 10:
-                {
-                    commonPegsCount = 15;
-                    jumpPegsCount = 5;
-                    break;
-                }
-        }
+			default:
+				{
+					commonPegsCount = 2;
+					jumpPegsCount = 0;
+					pointsBonusesList[0].SetActive(true);
+					break;
+				}
+		}
     }
 
     public void PegIsPlaced(int pegType)
@@ -349,7 +333,6 @@ public class PegsArrangementBehaviour : MonoBehaviour
             case 3:
                 {
                     pointsBonusesListColliders[0].isTrigger = triggerIsOn;
-                    pointsBonusesListColliders[1].isTrigger = triggerIsOn;
                     speedBonusesListColliders[0].isTrigger = triggerIsOn;
                     reboundBonusesListColliders[0].isTrigger = triggerIsOn;
                     break;
@@ -357,7 +340,6 @@ public class PegsArrangementBehaviour : MonoBehaviour
             case 4:
                 {
                     pointsBonusesListColliders[0].isTrigger = triggerIsOn;
-                    pointsBonusesListColliders[1].isTrigger = triggerIsOn;
                     speedBonusesListColliders[0].isTrigger = triggerIsOn;
                     reboundBonusesListColliders[0].isTrigger = triggerIsOn;
                     healthBonusesListColliders[0].isTrigger = triggerIsOn;
@@ -365,34 +347,43 @@ public class PegsArrangementBehaviour : MonoBehaviour
                 }
             case 5:
                 {
-
-                    break;
+					pointsBonusesListColliders[0].isTrigger = triggerIsOn;
+					speedBonusesListColliders[0].isTrigger = triggerIsOn;
+					reboundBonusesListColliders[0].isTrigger = triggerIsOn;
+					healthBonusesListColliders[0].isTrigger = triggerIsOn;
+					break;
                 }
             case 6:
                 {
-
-                    break;
+					pointsBonusesListColliders[0].isTrigger = triggerIsOn;
+					speedBonusesListColliders[0].isTrigger = triggerIsOn;
+					reboundBonusesListColliders[0].isTrigger = triggerIsOn;
+					healthBonusesListColliders[0].isTrigger = triggerIsOn;
+					break;
                 }
             case 7:
                 {
-
-                    break;
+					pointsBonusesListColliders[0].isTrigger = triggerIsOn;
+					pointsBonusesListColliders[1].isTrigger = triggerIsOn;
+					speedBonusesListColliders[0].isTrigger = triggerIsOn;
+					reboundBonusesListColliders[0].isTrigger = triggerIsOn;
+					healthBonusesListColliders[0].isTrigger = triggerIsOn;
+					break;
                 }
             case 8:
                 {
-
-                    break;
+					pointsBonusesListColliders[0].isTrigger = triggerIsOn;
+					pointsBonusesListColliders[1].isTrigger = triggerIsOn;
+					speedBonusesListColliders[0].isTrigger = triggerIsOn;
+					reboundBonusesListColliders[0].isTrigger = triggerIsOn;
+					healthBonusesListColliders[0].isTrigger = triggerIsOn;
+					break;
                 }
-            case 9:
-                {
-
-                    break;
-                }
-            case 10:
-                {
-
-                    break;
-                }
-        }
+			default:
+				{
+					pointsBonusesListColliders[0].isTrigger = triggerIsOn;
+					break;
+				}
+		}
     }
 }

@@ -73,6 +73,8 @@ public class PegBehaviour : MonoBehaviour
 
 	private void PegMoveController()
 	{
+		Debug.Log("isGameStart " + GameBehaviour.isGameStart);
+		Debug.Log("isGamePaused " + GameBehaviour.isGamePaused);
 		if (GameBehaviour.isGameStart)
 			return;
 		if (GameBehaviour.isGamePaused)
@@ -124,10 +126,11 @@ public class PegBehaviour : MonoBehaviour
 	private void TeleportPegToMouse()
 	{
 		var mousePos = mousePointer.gameObject.transform.position;
-		if(Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(mousePos.x, mousePos.y)) > 2f)
+		if(Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(mousePos.x, mousePos.y)) > 1.5f)
 		{
 			if (isMouseDrug && mousePointer.isPegCanPlaced || isMouseDrug && mousePointer.isMouseInStartZone)
 			{
+				rigidBody.velocity = Vector3.zero;
 				gameObject.transform.position = new Vector3(mousePos.x, mousePos.y, transform.position.z);
 			}
 		}
@@ -135,19 +138,16 @@ public class PegBehaviour : MonoBehaviour
 
 	private void StayedPegController()
 	{
-		if(isMouseDrug && !outerBallGameObject.activeSelf)
+		if(isMouseDrug && rigidBody.bodyType != RigidbodyType2D.Dynamic)
 		{
-			outerBallGameObject.SetActive(true);
 			rigidBody.bodyType = RigidbodyType2D.Dynamic;
 		}
 		else if (!isPegClicked)
 		{
-			outerBallGameObject.SetActive(false);
 			rigidBody.bodyType = RigidbodyType2D.Kinematic;
 		}
-		else if(!isMouseDrug && outerBallGameObject.activeSelf)
+		else if(!isMouseDrug && rigidBody.bodyType != RigidbodyType2D.Static)
 		{
-			outerBallGameObject.SetActive(false);
 			rigidBody.bodyType = RigidbodyType2D.Static;
 		}
 	}
@@ -209,52 +209,6 @@ public class PegBehaviour : MonoBehaviour
 				{
 					Debug.Log("OnTriggerExit");
 					isPegBeenPlaced = true;
-				}
-			}
-		}
-	}
-
-	private void OnCollisionStay2D(Collision2D collision)
-	{
-		if (collision != null)
-		{
-			if (collision.gameObject.CompareTag("Peg"))
-			{
-				PegBehaviour collidePeg = collision.gameObject.GetComponent<PegBehaviour>();
-				Collider2D colliderCollidePeg = collidePeg.GetComponent<CircleCollider2D>();
-				Collider2D ballCollidePeg = collidePeg.transform.GetChild(0).GetComponent<CircleCollider2D>();
-
-				Debug.Log("Peg collision Enter " + collidePeg.gameObject.name);
-
-				if (isMouseDrug && !collidePeg.isPegClicked)
-				{
-					Physics2D.IgnoreCollision(colliderCollidePeg, pegCollider);
-					Physics2D.IgnoreCollision(colliderCollidePeg, outerBall);
-					Physics2D.IgnoreCollision(ballCollidePeg, pegCollider);
-					Physics2D.IgnoreCollision(ballCollidePeg, outerBall);
-				}
-			}
-		}
-	}
-
-	private void OnCollisionExit2D(Collision2D collision)
-	{
-		if (collision != null)
-		{
-			if (collision.gameObject.CompareTag("Peg"))
-			{
-				PegBehaviour collidePeg = collision.gameObject.GetComponent<PegBehaviour>();
-				Collider2D colliderCollidePeg = collidePeg.GetComponent<CircleCollider2D>();
-				Collider2D ballCollidePeg = collidePeg.transform.GetChild(0).GetComponent<CircleCollider2D>();
-
-				Debug.Log("Peg collision Exit " + collidePeg.gameObject.name);
-
-				if (isMouseDrug && !collidePeg.isPegClicked)
-				{
-					Physics2D.IgnoreCollision(colliderCollidePeg, pegCollider, false);
-					Physics2D.IgnoreCollision(colliderCollidePeg, outerBall, false);
-					Physics2D.IgnoreCollision(ballCollidePeg, pegCollider, false);
-					Physics2D.IgnoreCollision(ballCollidePeg, outerBall, false);
 				}
 			}
 		}

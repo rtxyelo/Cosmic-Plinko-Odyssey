@@ -963,7 +963,7 @@ MonoBehaviour:
   isReset: 0
   isSetKeys: 0
   currentLevel: 1
-  maxLevel: 1
+  maxLevel: 8
   musicVolume: 0.2
 --- !u!4 &790776319
 Transform:
@@ -1120,6 +1120,10 @@ PrefabInstance:
     - target: {fileID: 126402475223876, guid: f31a9018449fc4146b6de4a3eed95523, type: 3}
       propertyPath: m_Name
       value: Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 126402475223876, guid: f31a9018449fc4146b6de4a3eed95523, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 402919695852974209, guid: f31a9018449fc4146b6de4a3eed95523, type: 3}
       propertyPath: menuPanel
