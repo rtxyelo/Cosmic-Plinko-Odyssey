@@ -16,6 +16,7 @@ TagManager:
   - ReboundWall
   - CommonPegPosition
   - JumpPegPosition
+  - Levels
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - Ball
   - MousePointer
   - BallLauncher
-  - 
+  - StartPeg
   - 
   - 
   - 
