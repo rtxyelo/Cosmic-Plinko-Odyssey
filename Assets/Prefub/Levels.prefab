@@ -2186,7 +2186,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.001297, y: -387.79}
+  m_AnchoredPosition: {x: 0.001297, y: -387.7893}
   m_SizeDelta: {x: 364.01, y: 737.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5464562029945210755
@@ -2359,6 +2359,7 @@ GameObject:
   - component: {fileID: 6572414979715277769}
   - component: {fileID: 4437263951611036309}
   - component: {fileID: 5466273764902284796}
+  - component: {fileID: 7431438810287320005}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -2376,7 +2377,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6472892449649576315}
   - {fileID: 4309582476416887516}
@@ -2384,7 +2385,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 6.31, y: -80.47}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 949.11, y: 1131.39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1668278860167949382
@@ -2438,7 +2439,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 5bf25e39c3af9ad4991204526b53b5e5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -2458,6 +2459,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b04066ff96af11439ccbb2e55f07149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7431438810287320005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5314041825503181131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63523d0669f9c184bb8aaaf59e8f9b9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuPanel: {fileID: 6961379527643720219}
+  levelsPanel: {fileID: 0}
 --- !u!1 &5463184899665307031
 GameObject:
   m_ObjectHideFlags: 0
@@ -3600,30 +3615,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6961379527643720219}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 0
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SoundBehaviour, Assembly-CSharp
         m_MethodName: PlayButtonSound
@@ -3634,6 +3625,30 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 4437263951611036309}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LevelsPanelBackAnim
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 257561141640659988}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LevelsButtonsAnim
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &7502854193317889678

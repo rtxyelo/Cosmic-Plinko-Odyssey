@@ -764,7 +764,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 05dc91806dfc5244abaa87a50989d4a9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -921,18 +921,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5176316157998648281}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: Play
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: GameNameTextCloseAnim
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 2335092885613591629}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: Play
@@ -1078,18 +1066,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5176316157998648281}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: Play
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: GameNameTextCloseAnim
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 2335092885613591629}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: Play
@@ -1267,7 +1243,7 @@ PrefabInstance:
     - target: {fileID: 7914847324435314969, guid: f9e673a2359137b4aa695d7f36c93a26, type: 3}
       propertyPath: menuPanel
       value: 
-      objectReference: {fileID: 126402475223876}
+      objectReference: {fileID: 0}
     - target: {fileID: 8852959780872006251, guid: f9e673a2359137b4aa695d7f36c93a26, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1356,10 +1332,5 @@ PrefabInstance:
 --- !u!224 &1341037931972518899 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8852959780872006251, guid: f9e673a2359137b4aa695d7f36c93a26, type: 3}
-  m_PrefabInstance: {fileID: 7512104100200827288}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &5176316157998648281 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3428825903296545345, guid: f9e673a2359137b4aa695d7f36c93a26, type: 3}
   m_PrefabInstance: {fileID: 7512104100200827288}
   m_PrefabAsset: {fileID: 0}
