@@ -6,13 +6,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 public class PegsArrangementBehaviour : MonoBehaviour
-{
+{                                           // 1  2  3  4  5 | 6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+    private int[] commonPegsCountByLvlList = { 2, 4, 6, 8, 4,  4, 6, 8, 4, 6, 8, 3, 5, 7, 5, 7, 9, 6, 8, 3, 5, 7, 5, 7, 9 };
+    private int[] jumpPegsCountByLvlList =   { 0, 0, 0, 0, 1,  0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 1, 1, 2, 2, 2, 3, 3, 3 };
+
     private string currentLevelKey = "CurrentLevel";
     private int currentLevelValue;
 
     [SerializeField] private RectTransform commonPegPosition;
     [SerializeField] private RectTransform jumpPegPosition;
-	//private Transform speedPegPosition;
 
 	[HideInInspector] public int commonPegsCount;
 	[HideInInspector] public int jumpPegsCount;
@@ -36,11 +38,10 @@ public class PegsArrangementBehaviour : MonoBehaviour
     private bool commonPegIsPlaced = true;
     private bool jumpPegIsPlaced = true;
 
-    [SerializeField] List<GameObject> pointsBonusesList = new List<GameObject>();
-    [SerializeField] List<GameObject> speedBonusesList = new List<GameObject>();
-    [SerializeField] List<GameObject> reboundBonusesList = new List<GameObject>();
-    [SerializeField] List<GameObject> healthBonusesList = new List<GameObject>();
-
+    [SerializeField] private GameObject pointsBonusesList;
+    [SerializeField] private GameObject speedBonusesList;
+    [SerializeField] private GameObject reboundBonusesList;
+    [SerializeField] private GameObject healthBonusesList;
 
     List<BoxCollider2D> pointsBonusesListColliders = new List<BoxCollider2D>();
     List<BoxCollider2D> speedBonusesListColliders = new List<BoxCollider2D>();
@@ -174,90 +175,13 @@ public class PegsArrangementBehaviour : MonoBehaviour
 
     private void CalculatePegsCountByLvl(int currentLvl)
     {
-        switch (currentLvl)
-        {
-            case 1:
-                {
-                    commonPegsCount = 2;
-                    jumpPegsCount = 0;
-                    pointsBonusesList[0].SetActive(true);
-                    break;
-                }
-            case 2:
-                {
-                    commonPegsCount = 4;
-                    jumpPegsCount = 0;
-                    pointsBonusesList[1].SetActive(true);
-                    speedBonusesList[0].SetActive(true);
-                    break;
-                }
-            case 3:
-                {
-                    commonPegsCount = 5;
-                    jumpPegsCount = 1;
-                    pointsBonusesList[2].SetActive(true);
-                    speedBonusesList[1].SetActive(true);
-                    reboundBonusesList[0].SetActive(true);
-                    break;
-                }
-            case 4:
-                {
-                    commonPegsCount = 9;
-                    jumpPegsCount = 1;
-                    pointsBonusesList[3].SetActive(true);
-                    speedBonusesList[2].SetActive(true);
-                    reboundBonusesList[1].SetActive(true);
-                    healthBonusesList[0].SetActive(true);
-                    break;
-                }
-            case 5:
-                {
-                    commonPegsCount = 8;
-                    jumpPegsCount = 3;
-					pointsBonusesList[4].SetActive(true);
-					speedBonusesList[3].SetActive(true);
-					reboundBonusesList[2].SetActive(true);
-					healthBonusesList[1].SetActive(true);
-					break;
-                }
-            case 6:
-                {
-                    commonPegsCount = 9;
-                    jumpPegsCount = 3;
-					pointsBonusesList[5].SetActive(true);
-					speedBonusesList[4].SetActive(true);
-					reboundBonusesList[3].SetActive(true);
-					healthBonusesList[2].SetActive(true);
-					break;
-                }
-            case 7:
-                {
-                    commonPegsCount = 10;
-                    jumpPegsCount = 2;
-					pointsBonusesList[6].SetActive(true);
-					speedBonusesList[5].SetActive(true);
-					reboundBonusesList[4].SetActive(true);
-					healthBonusesList[3].SetActive(true);
-					break;
-                }
-            case 8:
-                {
-                    commonPegsCount = 11;
-                    jumpPegsCount = 3;
-					pointsBonusesList[7].SetActive(true);
-					speedBonusesList[6].SetActive(true);
-					reboundBonusesList[5].SetActive(true);
-					healthBonusesList[4].SetActive(true);
-					break;
-                }
-			default:
-				{
-					commonPegsCount = 2;
-					jumpPegsCount = 0;
-					pointsBonusesList[0].SetActive(true);
-					break;
-				}
-		}
+        pointsBonusesList.transform.GetChild(currentLvl - 1).gameObject.SetActive(true);
+        speedBonusesList.transform.GetChild(currentLvl - 1).gameObject.SetActive(true);
+        reboundBonusesList.transform.GetChild(currentLvl - 1).gameObject.SetActive(true);
+        healthBonusesList.transform.GetChild(currentLvl - 1).gameObject.SetActive(true);
+
+        commonPegsCount = commonPegsCountByLvlList[currentLvl - 1];
+        jumpPegsCount = jumpPegsCountByLvlList[currentLvl - 1];
     }
 
     public void PegIsPlaced(int pegType)
@@ -312,74 +236,21 @@ public class PegsArrangementBehaviour : MonoBehaviour
 
     private void BonusesColliderTrigger(bool triggerIsOn)
     {
-        int currentLvl = PlayerPrefs.GetInt(currentLevelKey, 1);
-        switch (currentLvl)
+        foreach (var item in pointsBonusesListColliders)
         {
-            case 1:
-                {
-                    pointsBonusesListColliders[0].isTrigger = triggerIsOn;
-                    break;
-                }
-            case 2:
-                {
-                    pointsBonusesListColliders[0].isTrigger = triggerIsOn;
-                    speedBonusesListColliders[0].isTrigger = triggerIsOn;
-                    break;
-                }
-            case 3:
-                {
-                    pointsBonusesListColliders[0].isTrigger = triggerIsOn;
-                    speedBonusesListColliders[0].isTrigger = triggerIsOn;
-                    reboundBonusesListColliders[0].isTrigger = triggerIsOn;
-                    break;
-                }
-            case 4:
-                {
-                    pointsBonusesListColliders[0].isTrigger = triggerIsOn;
-                    speedBonusesListColliders[0].isTrigger = triggerIsOn;
-                    reboundBonusesListColliders[0].isTrigger = triggerIsOn;
-                    healthBonusesListColliders[0].isTrigger = triggerIsOn;
-                    break;
-                }
-            case 5:
-                {
-					pointsBonusesListColliders[0].isTrigger = triggerIsOn;
-					speedBonusesListColliders[0].isTrigger = triggerIsOn;
-					reboundBonusesListColliders[0].isTrigger = triggerIsOn;
-					healthBonusesListColliders[0].isTrigger = triggerIsOn;
-					break;
-                }
-            case 6:
-                {
-					pointsBonusesListColliders[0].isTrigger = triggerIsOn;
-					speedBonusesListColliders[0].isTrigger = triggerIsOn;
-					reboundBonusesListColliders[0].isTrigger = triggerIsOn;
-					healthBonusesListColliders[0].isTrigger = triggerIsOn;
-					break;
-                }
-            case 7:
-                {
-					pointsBonusesListColliders[0].isTrigger = triggerIsOn;
-					pointsBonusesListColliders[1].isTrigger = triggerIsOn;
-					speedBonusesListColliders[0].isTrigger = triggerIsOn;
-					reboundBonusesListColliders[0].isTrigger = triggerIsOn;
-					healthBonusesListColliders[0].isTrigger = triggerIsOn;
-					break;
-                }
-            case 8:
-                {
-					pointsBonusesListColliders[0].isTrigger = triggerIsOn;
-					pointsBonusesListColliders[1].isTrigger = triggerIsOn;
-					speedBonusesListColliders[0].isTrigger = triggerIsOn;
-					reboundBonusesListColliders[0].isTrigger = triggerIsOn;
-					healthBonusesListColliders[0].isTrigger = triggerIsOn;
-					break;
-                }
-			default:
-				{
-					pointsBonusesListColliders[0].isTrigger = triggerIsOn;
-					break;
-				}
-		}
+            item.isTrigger = triggerIsOn;
+        }
+        foreach (var item in speedBonusesListColliders)
+        {
+            item.isTrigger = triggerIsOn;
+        }
+        foreach (var item in reboundBonusesListColliders)
+        {
+            item.isTrigger = triggerIsOn;
+        }
+        foreach (var item in pointsBonusesListColliders)
+        {
+            item.isTrigger = triggerIsOn;
+        }
     }
 }
