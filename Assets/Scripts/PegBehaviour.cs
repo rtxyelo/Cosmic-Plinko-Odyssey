@@ -73,8 +73,6 @@ public class PegBehaviour : MonoBehaviour
 
 	private void PegMoveController()
 	{
-		Debug.Log("isGameStart " + GameBehaviour.isGameStart);
-		Debug.Log("isGamePaused " + GameBehaviour.isGamePaused);
 		if (GameBehaviour.isGameStart)
 			return;
 		if (GameBehaviour.isGamePaused)

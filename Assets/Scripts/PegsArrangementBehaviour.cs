@@ -78,17 +78,15 @@ public class PegsArrangementBehaviour : MonoBehaviour
 
 		if (ballBehaviour.isStart && isBonusesTriggersOn)
         {
-            Debug.Log("BonusesColliderTrigger ON");
             isBonusesTriggersOn = false;
             BonusesColliderTrigger(true);
         }
         else if (!ballBehaviour.isStart && isBonusesTriggersOff)
         {
-            Debug.Log("BonusesColliderTrigger OFF");
             isBonusesTriggersOff = false;
             BonusesColliderTrigger(false);
         }
-    }
+	}
 
     private void FillListsOfBonusesColliders()
     {
@@ -275,8 +273,6 @@ public class PegsArrangementBehaviour : MonoBehaviour
 
     public void LoseRestartGame()
     {
-        commonPegIsPlaced = false;
-        jumpPegIsPlaced = false;
         isRemoveJumpPegMaterial = true;
         isBonusesTriggersOff = true;
         isBonusesTriggersOn = true;
