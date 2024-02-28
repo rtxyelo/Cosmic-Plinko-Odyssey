@@ -248,7 +248,7 @@ public class PegsArrangementBehaviour : MonoBehaviour
         {
             item.isTrigger = triggerIsOn;
         }
-        foreach (var item in pointsBonusesListColliders)
+        foreach (var item in healthBonusesListColliders)
         {
             item.isTrigger = triggerIsOn;
         }
