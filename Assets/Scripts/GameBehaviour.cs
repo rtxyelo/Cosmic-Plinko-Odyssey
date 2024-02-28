@@ -6,8 +6,8 @@ using UnityEditor.Animations;
 using UnityEngine;
 
 public class GameBehaviour : MonoBehaviour
-{                                  // 1  2  3  4  5  6  7  8  9  10 11 12 13 | 14 15 16 17 18 19 20 21 22 23 24 25
-    public static int[] winScore = { 40, 100, 150, 170, 200, 1000, 2000, 3000, 5000, 10000 };
+{                                  // 1  2  3  4  5  6  7  8  9  10 11 12 13 14  15  16 17  18 19 20 21 22 23 24 25
+    public static int[] winScore = { 10, 20, 30, 40, 50, 120, 140, 150, 130, 150, 200, 140, 170, 190, 170, 240, 240, 220, 260, 140, 350, 230, 240, 280, 510, 190, 230, 150, 190, 220, 190, 270, 260, 240, 290, 190, 230, 150, 190, 220, 190, 270, 260, 240, 150, 360, 250, 250, 310, 540};
 
     [HideInInspector]
     public static bool isGameStart = false;
