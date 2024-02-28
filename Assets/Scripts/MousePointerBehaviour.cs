@@ -46,7 +46,7 @@ public class MousePointerBehaviour : MonoBehaviour
     {
         int layers = LayersToCollide.value;
 
-		pegPlaceCollision = Physics2D.OverlapCircle(transform.position, transform.localScale.x, layers);
+		pegPlaceCollision = Physics2D.OverlapCircle(transform.position, transform.localScale.x*2f, layers);
 		isPegCanPlaced = pegPlaceCollision == null;
 	}
 
