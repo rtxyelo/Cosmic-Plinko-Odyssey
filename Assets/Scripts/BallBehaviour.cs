@@ -20,7 +20,8 @@ public class BallBehaviour : MonoBehaviour
 	private bool isGameBeenPaused = false;
 	private Vector3 initialPosition;
 	private bool isHealthBonusCollect = false;
-	private PegsArrangementBehaviour pegsArrangementBehaviour;
+	private int reboundBonusCollectCount = 0;
+    private PegsArrangementBehaviour pegsArrangementBehaviour;
     void Start()
     {
 		initialPosition = transform.position;
@@ -95,7 +96,10 @@ public class BallBehaviour : MonoBehaviour
 
             if (collision.gameObject.CompareTag("ReboundWall"))
             {
-                reboundWall.SetActive(false);
+                reboundBonusCollectCount--;
+                
+                if (reboundBonusCollectCount <= 0)
+                    reboundWall.SetActive(false);
             }
         }
 	}
@@ -129,6 +133,7 @@ public class BallBehaviour : MonoBehaviour
         if (collision.gameObject.CompareTag("ReboundBonus"))
         {
             reboundWall.SetActive(true);
+            reboundBonusCollectCount++;
 
             PegsArrangementBehaviour.listOfCollectBonuses.Add(collision.gameObject);
             collision.gameObject.SetActive(false);
