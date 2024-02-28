@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 
 public class GameBehaviour : MonoBehaviour
-{                                  // 1  2  3  4  5  6  7  8  9  10 11 12 13 14  15  16 17  18 19 20 21 22 23 24 25
+{
     public static int[] winScore = { 10, 20, 30, 40, 50, 120, 140, 150, 130, 150, 200, 140, 170, 190, 170, 240, 240, 220, 260, 140, 350, 230, 240, 280, 510, 190, 230, 150, 190, 220, 190, 270, 260, 240, 290, 190, 230, 150, 190, 220, 190, 270, 260, 240, 150, 360, 250, 250, 310, 540};
 
     [HideInInspector]
@@ -19,10 +19,6 @@ public class GameBehaviour : MonoBehaviour
     private GameObject winPanel;
     [SerializeField]
     private GameObject losePanel;
-    [SerializeField]
-    private GameObject pegsSpawnPoints;
-
-    [SerializeField] List<GameObject> bonusesList = new List<GameObject>();
 
     private Animator winPanelAnim;
     private Animator losePanelAnim;
@@ -56,7 +52,6 @@ public class GameBehaviour : MonoBehaviour
         pauseButton = GameObject.Find("PauseButton");
 	}
 
-    // Update is called once per frame
     void Update()
     {
         GameOverCheckUpdate();
@@ -93,10 +88,8 @@ public class GameBehaviour : MonoBehaviour
                 Debug.Log("Max Level Key " + PlayerPrefs.GetInt(maxLevelKey, 0));
             }
             pauseButton.SetActive(false);
-            //HideBonuses();
             winPanelScoreText.text = "Score: " + ScoreBehaviour.playerScore.ToString();
 			winPanel.SetActive(true);
-            //pegsSpawnPoints.SetActive(false);
             winPanelAnim.Play("GameOverPanelOnAnim");
         }
 	}
@@ -106,31 +99,22 @@ public class GameBehaviour : MonoBehaviour
         if (!losePanel.activeSelf)
         {
             pauseButton.SetActive(false);
-            //HideBonuses();
             losePanelScoreText.text = "Score: " + ScoreBehaviour.playerScore.ToString();
 			losePanel.SetActive(true);
-            //pegsSpawnPoints.SetActive(false);
             losePanelAnim.Play("GameOverPanelOnAnim");
         }
 	}
-
-    private void HideBonuses()
-    {
-        for (int i = 0; i < bonusesList.Count; i++)
-        {
-            if (bonusesList[i])
-                bonusesList[i].SetActive(false);
-        }
-    }
 
 	public void GameStart()
     {
         isGameStart = true;
     }
 
-    // Todo: final level congrads
     public void PlayNextLevel()
     {
-        PlayerPrefs.SetInt(currentLevelKey, PlayerPrefs.GetInt(currentLevelKey, 1) + 1);
+        if (PlayerPrefs.GetInt(currentLevelKey, 1) != 50)
+            PlayerPrefs.SetInt(currentLevelKey, PlayerPrefs.GetInt(currentLevelKey, 1) + 1);
+        else
+            PlayerPrefs.SetInt(currentLevelKey, 1);
     }
 }

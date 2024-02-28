@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 11.032, y: 192.83}
+  m_AnchoredPosition: {x: 11.032, y: 192.83002}
   m_SizeDelta: {x: 1057.9, y: 316.96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &13453262
@@ -907,7 +907,7 @@ MonoBehaviour:
           m_StringArgument: GameOverPanelOffAnim
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 13453262}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: Play
         m_Mode: 5
@@ -6435,20 +6435,6 @@ MonoBehaviour:
   pausePanel: {fileID: 1882728300}
   winPanel: {fileID: 517596352}
   losePanel: {fileID: 1589184235}
-  pegsSpawnPoints: {fileID: 0}
-  bonusesList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!4 &497815414
 Transform:
   m_ObjectHideFlags: 0
@@ -15974,7 +15960,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 13453262}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: Play
         m_Mode: 5
